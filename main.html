@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ConnectX Dashboard — Your social hub for feed, messages, events, and more.">
+  <title>Dashboard — ConnectX</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/feed.css">
+  <link rel="stylesheet" href="css/profile.css">
+  <link rel="stylesheet" href="css/messages.css">
+  <link rel="stylesheet" href="css/events.css">
+  <link rel="stylesheet" href="css/darkmode.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- Skip Navigation -->
+<a href="#dashboard-main" class="skip-link">Skip to main content</a>
+
+<!-- ════════════════════════════════════════════
+     APP SHELL
+════════════════════════════════════════════ -->
+<div class="app-shell">
+
+  <!-- ══════════ SIDEBAR ══════════ -->
+  <nav class="sidebar" id="sidebar" aria-label="Dashboard navigation" role="navigation">
+
+    <!-- Brand -->
+    <a href="index.html" class="sidebar-brand" aria-label="ConnectX home">
+      <img src="images/logo.png" alt="ConnectX" class="sidebar-logo" id="sidebar-logo">
+      <div class="sidebar-brand-text">
+        <span class="sidebar-brand-name">ConnectX</span>
+        <span class="sidebar-brand-tag">Social Platform</span>
+      </div>
+    </a>
+
+    <!-- User Mini Profile -->
+    <div class="sidebar-user" id="sidebar-user-profile" role="button" tabindex="0"
+         aria-label="Your profile" onclick="Dashboard.showSection('profile')">
+      <div class="relative" style="display:inline-block;">
+        <img src="images/user1.jpg" alt="Your avatar" class="avatar avatar-md" id="sidebar-avatar">
+        <span class="online-dot"></span>
+      </div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebar-user-name">Loading...</div>
+        <div class="sidebar-user-role" id="sidebar-user-role">Member</div>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="sidebar-nav" role="list">
+
+      <button class="sidebar-nav-link active" data-section="feed" role="listitem"
+              aria-label="Home feed" title="Home Feed">
+        <i class="fas fa-house" aria-hidden="true"></i>
+        <span class="nav-label">Feed</span>
+      </button>
+
+      <button class="sidebar-nav-link" data-section="messages" role="listitem"
+              aria-label="Messages" title="Messages">
+        <i class="fas fa-comment-dots" aria-hidden="true"></i>
+        <span class="nav-label">Messages</span>
+        <span class="nav-badge" aria-label="4 unread messages">4</span>
+      </button>
+
+      <button class="sidebar-nav-link" data-section="notifications" role="listitem"
+              aria-label="Notifications" title="Notifications">
+        <i class="fas fa-bell" aria-hidden="true"></i>
+        <span class="nav-label">Notifications</span>
+        <span class="nav-badge" aria-label="3 unread notifications">3</span>
+      </button>
+
+      <button class="sidebar-nav-link" data-section="events" role="listitem"
+              aria-label="Events" title="Events">
+        <i class="fas fa-calendar-days" aria-hidden="true"></i>
+        <span class="nav-label">Events</span>
+      </button>
+
+      <button class="sidebar-nav-link" data-section="showcase" role="listitem"
+              aria-label="Talent Showcase" title="Showcase">
+        <i class="fas fa-star" aria-hidden="true"></i>
+        <span class="nav-label">Showcase</span>
+      </button>
+
+      <button class="sidebar-nav-link" data-section="profile" role="listitem"
+              aria-label="Your profile" title="Profile">
+        <i class="fas fa-user-circle" aria-hidden="true"></i>
+        <span class="nav-label">Profile</span>
+      </button>
+
+      <button class="sidebar-nav-link" data-section="settings" role="listitem"
+              aria-label="Settings" title="Settings">
+        <i class="fas fa-gear" aria-hidden="true"></i>
+        <span class="nav-label">Settings</span>
+      </button>
+    </div>
+
+    <!-- Sidebar Bottom: Logout -->
+    <div class="sidebar-bottom">
+      <button class="sidebar-logout" id="logout-btn" aria-label="Log out of ConnectX">
+        <i class="fas fa-right-from-bracket" aria-hidden="true"></i>
+        <span class="nav-label">Logout</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open navigation menu" aria-expanded="false">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- ══════════ MAIN CONTENT ══════════ -->
+  <div class="main-content" role="main" id="dashboard-main">
+
+    <!-- ── TOP HEADER ── -->
+    <header class="dashboard-header" role="banner">
+
+      <!-- Search -->
+      <div class="header-search" role="search">
+        <i class="fas fa-search header-search-icon" aria-hidden="true"></i>
+        <input type="search" id="header-search" placeholder="Search people, posts, events..."
+               aria-label="Search ConnectX" autocomplete="off">
+      </div>
+
+      <!-- Page title (mobile) -->
+      <h1 id="header-page-title" class="hide-mobile"
+          style="font-size:var(--fs-md);font-weight:var(--fw-bold);white-space:nowrap;color:var(--text-primary);">
+        Home Feed
+      </h1>
+
+      <!-- Header Actions -->
+      <div class="header-actions" role="group" aria-label="Header actions">
+
+        <!-- Dark Mode Toggle -->
+        <button class="header-action-btn theme-toggle-icon" id="header-theme-toggle" data-theme-toggle
+                aria-label="Toggle dark mode" title="Toggle dark/light mode">
+          <i class="fas fa-sun sun-icon theme-icon" aria-hidden="true"></i>
+          <i class="fas fa-moon moon-icon" aria-hidden="true"></i>
+        </button>
+
+        <!-- Notifications -->
+        <button class="header-action-btn" id="notif-bell"
+                aria-label="View notifications, 3 unread" title="Notifications">
+          <i class="fas fa-bell" aria-hidden="true"></i>
+          <span class="header-notif-dot" aria-hidden="true"></span>
+        </button>
+
+        <!-- Messages shortcut -->
+        <button class="header-action-btn hide-mobile"
+                onclick="Dashboard.showSection('messages')"
+                aria-label="Open messages" title="Messages">
+          <i class="fas fa-comment-dots" aria-hidden="true"></i>
+        </button>
+
+        <!-- User Avatar Dropdown -->
+        <div class="relative" id="user-dropdown-wrapper" data-dropdown>
+          <button class="header-avatar-btn" id="header-avatar-btn"
+                  aria-haspopup="true" aria-expanded="false"
+                  aria-label="User menu" title="Your account">
+            <img src="images/user1.jpg" alt="Your avatar" class="avatar avatar-sm" id="header-avatar">
+            <span class="header-user-name" id="header-user-name">User</span>
+            <i class="fas fa-chevron-down header-chevron" aria-hidden="true"></i>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div class="dropdown" id="header-dropdown" role="menu" aria-label="User menu">
+            <button class="dropdown-item" role="menuitem"
+                    onclick="Dashboard.showSection('profile')">
+              <i class="fas fa-user-circle" aria-hidden="true"></i> View Profile
+            </button>
+            <button class="dropdown-item" role="menuitem"
+                    onclick="Dashboard.showSection('settings')">
+              <i class="fas fa-gear" aria-hidden="true"></i> Settings
+            </button>
+            <button class="dropdown-item" role="menuitem" data-theme-toggle>
+              <i class="fas fa-moon theme-icon" aria-hidden="true"></i>
+              <span class="theme-toggle-text">Dark Mode</span>
+            </button>
+            <div class="divider" role="separator"></div>
+            <button class="dropdown-item danger" role="menuitem" id="dropdown-logout">
+              <i class="fas fa-right-from-bracket" aria-hidden="true"></i> Log Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── DASHBOARD CONTENT ── -->
+    <div class="dashboard-content">
+
+      <!-- ════════ SECTION: FEED ════════ -->
+      <section class="content-section active" id="section-feed"
+               aria-labelledby="feed-heading" role="region">
+        <h2 id="feed-heading" class="sr-only">Home Feed</h2>
+
+        <div class="feed-layout">
+
+          <!-- LEFT: Profile Quick Card -->
+          <aside class="feed-left-col" aria-label="Your profile summary">
+            <div class="feed-widget">
+              <div style="height:70px;background:var(--gradient-main);border-radius:var(--radius-lg) var(--radius-lg) 0 0;position:relative;">
+                <div style="position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);">
+                  <div class="relative" style="display:inline-block;">
+                    <img src="images/user1.jpg" alt="Your avatar"
+                         class="avatar avatar-lg"
+                         style="border:3px solid var(--surface-card);"
+                         id="feed-sidebar-avatar">
+                    <span class="online-dot"></span>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:var(--space-xl) var(--space-lg) var(--space-lg);text-align:center;margin-top:20px;">
+                <div style="font-weight:var(--fw-bold);font-size:var(--fs-base);color:var(--text-primary);" id="feed-user-name">Your Name</div>
+                <div style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:2px;" id="feed-user-role">Member</div>
+                <div style="display:flex;justify-content:center;gap:var(--space-xl);margin:var(--space-md) 0;padding:var(--space-md) 0;border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);">
+                  <div style="text-align:center;cursor:pointer;" onclick="Dashboard.showSection('profile')">
+                    <div style="font-weight:var(--fw-extrabold);font-size:var(--fs-lg);color:var(--text-primary);" id="feed-followers">1.2K</div>
+                    <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;">Followers</div>
+                  </div>
+                  <div style="text-align:center;cursor:pointer;" onclick="Dashboard.showSection('profile')">
+                    <div style="font-weight:var(--fw-extrabold);font-size:var(--fs-lg);color:var(--text-primary);">367</div>
+                    <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;">Following</div>
+                  </div>
+                </div>
+                <button class="btn btn-primary w-full btn-sm"
+                        onclick="Dashboard.showSection('profile')">
+                  <i class="fas fa-user" aria-hidden="true"></i> View Profile
+                </button>
+              </div>
+            </div>
+
+            <!-- Trending Tags Widget -->
+            <div class="feed-widget">
+              <div class="feed-widget-header">
+                <span class="feed-widget-title">🔥 Trending</span>
+                <a href="#" style="font-size:var(--fs-xs);color:var(--color-primary);font-weight:600;">See all</a>
+              </div>
+              <div class="feed-widget-body">
+                <div id="trending-tags"></div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- CENTER: Feed -->
+          <div class="feed-center-col">
+            <!-- Create Post -->
+            <div class="create-post-card" role="region" aria-label="Create a new post">
+              <div class="create-post-row">
+                <img src="images/user1.jpg" alt="Your avatar" class="avatar avatar-md" id="create-post-avatar">
+                <input type="text" class="create-post-input" id="create-post-box"
+                       placeholder="What's on your mind?" readonly
+                       aria-label="Create a new post">
+              </div>
+              <div class="create-post-actions" role="group" aria-label="Post type options">
+                <button class="create-post-action photo"
+                        aria-label="Add photo to post">
+                  <i class="fas fa-image" aria-hidden="true"></i> Photo
+                </button>
+                <button class="create-post-action video"
+                        aria-label="Add video to post">
+                  <i class="fas fa-video" aria-hidden="true"></i> Video
+                </button>
+                <button class="create-post-action event"
+                        onclick="Dashboard.showSection('events')"
+                        aria-label="Share an event">
+                  <i class="fas fa-calendar" aria-hidden="true"></i> Event
+                </button>
+                <button class="create-post-action article"
+                        aria-label="Write an article">
+                  <i class="fas fa-pen-to-square" aria-hidden="true"></i> Article
+                </button>
+              </div>
+            </div>
+
+            <!-- Posts Container -->
+            <div id="posts-container" role="feed" aria-label="Social feed" aria-busy="false">
+              <!-- Dynamically populated by feed.js -->
+            </div>
+          </div>
+
+          <!-- RIGHT: Suggested Users Widget -->
+          <aside class="feed-right-col" aria-label="Suggested connections">
+            <div class="feed-widget">
+              <div class="feed-widget-header">
+                <span class="feed-widget-title">People You May Know</span>
+              </div>
+              <div class="feed-widget-body">
+                <div id="suggested-users"></div>
+              </div>
+            </div>
+
+            <!-- Upcoming Events Widget -->
+            <div class="feed-widget">
+              <div class="feed-widget-header">
+                <span class="feed-widget-title">📅 Upcoming Events</span>
+                <button class="btn btn-ghost btn-sm" onclick="Dashboard.showSection('events')"
+                        style="font-size:var(--fs-xs);">See all</button>
+              </div>
+              <div class="feed-widget-body">
+                <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+                  <div style="display:flex;gap:var(--space-md);cursor:pointer;" onclick="Dashboard.showSection('events')">
+                    <div style="width:44px;height:44px;border-radius:var(--radius-md);background:rgba(99,102,241,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+                      <div style="font-size:10px;font-weight:700;color:var(--color-primary);text-transform:uppercase;">JUN</div>
+                      <div style="font-size:1.1rem;font-weight:800;color:var(--text-primary);line-height:1;">15</div>
+                    </div>
+                    <div>
+                      <div style="font-size:var(--fs-xs);font-weight:600;color:var(--text-primary);">Global Tech Summit 2026</div>
+                      <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">🌐 Online · Free</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;gap:var(--space-md);cursor:pointer;" onclick="Dashboard.showSection('events')">
+                    <div style="width:44px;height:44px;border-radius:var(--radius-md);background:rgba(139,92,246,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+                      <div style="font-size:10px;font-weight:700;color:var(--color-secondary);text-transform:uppercase;">JUN</div>
+                      <div style="font-size:1.1rem;font-weight:800;color:var(--text-primary);line-height:1;">20</div>
+                    </div>
+                    <div>
+                      <div style="font-size:var(--fs-xs);font-weight:600;color:var(--text-primary);">UX Design Masterclass</div>
+                      <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">🌐 Online · $49</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ════════ SECTION: MESSAGES ════════ -->
+      <section class="content-section" id="section-messages"
+               aria-labelledby="messages-heading" role="region">
+        <h2 id="messages-heading" class="sr-only">Messages</h2>
+
+        <div class="messages-layout">
+          <!-- Chat List -->
+          <div class="chat-list" id="chat-list-panel">
+            <div class="chat-list-header">
+              <h3>Messages</h3>
+              <div class="chat-search">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input type="search" id="chat-search-input" placeholder="Search conversations..."
+                       aria-label="Search conversations">
+              </div>
+            </div>
+            <div class="conversation-list" id="conversation-list" role="list" aria-label="Conversations">
+              <!-- Dynamically populated by messages.js -->
+            </div>
+          </div>
+
+          <!-- Chat Window -->
+          <div class="chat-window" id="chat-window" role="main" aria-label="Chat window">
+            <!-- Populated by messages.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════ SECTION: EVENTS ════════ -->
+      <section class="content-section" id="section-events"
+               aria-labelledby="events-heading" role="region">
+        <div class="page-heading">
+          <div class="page-heading-left">
+            <h2 id="events-heading">Events Hub</h2>
+            <p>Discover the best tech, design, and business events worldwide</p>
+          </div>
+          <button class="btn btn-primary" onclick="App.showToast('Event creation coming soon!','info')"
+                  aria-label="Create a new event">
+            <i class="fas fa-plus" aria-hidden="true"></i> Create Event
+          </button>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="events-filter-bar" id="events-filter-bar" role="group" aria-label="Event filters"></div>
+
+        <!-- Events Grid -->
+        <div class="events-grid" id="events-grid" aria-live="polite"></div>
+
+        <!-- Featured Speakers -->
+        <div class="speakers-section">
+          <div class="page-heading">
+            <div class="page-heading-left">
+              <h3 style="font-size:var(--fs-xl);font-weight:var(--fw-extrabold);">Featured Speakers</h3>
+              <p style="font-size:var(--fs-sm);color:var(--text-muted);">Industry leaders joining upcoming events</p>
+            </div>
+          </div>
+          <div class="speakers-grid" id="speakers-grid"></div>
+        </div>
+      </section>
+
+      <!-- ════════ SECTION: SHOWCASE ════════ -->
+      <section class="content-section" id="section-showcase"
+               aria-labelledby="showcase-heading" role="region">
+        <div class="page-heading">
+          <div class="page-heading-left">
+            <h2 id="showcase-heading">Talent Showcase</h2>
+            <p>Discover amazing projects and creative work from the community</p>
+          </div>
+          <button class="btn btn-primary"
+                  onclick="Dashboard.showSection('profile');setTimeout(()=>Profile.switchTab('showcase'),300)"
+                  aria-label="Add your project to showcase">
+            <i class="fas fa-plus" aria-hidden="true"></i> Add Project
+          </button>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="events-filter-bar" role="group" aria-label="Showcase filters" style="margin-bottom:var(--space-xl);">
+          <button class="filter-chip active" aria-pressed="true">All</button>
+          <button class="filter-chip" aria-pressed="false">Web Dev</button>
+          <button class="filter-chip" aria-pressed="false">Design</button>
+          <button class="filter-chip" aria-pressed="false">AI/ML</button>
+          <button class="filter-chip" aria-pressed="false">Mobile</button>
+          <button class="filter-chip" aria-pressed="false">Open Source</button>
+        </div>
+
+        <!-- Showcase from profile.js -->
+        <div class="showcase-grid" id="showcase-grid"></div>
+      </section>
+
+      <!-- ════════ SECTION: NOTIFICATIONS ════════ -->
+      <section class="content-section" id="section-notifications"
+               aria-labelledby="notifs-heading" role="region">
+        <div class="page-heading">
+          <div class="page-heading-left">
+            <h2 id="notifs-heading">Notifications</h2>
+            <p>Stay up to date with your activity</p>
+          </div>
+          <button class="btn btn-ghost btn-sm"
+                  onclick="Dashboard.markAllNotificationsAsRead()"
+                  aria-label="Mark all notifications as read">
+            <i class="fas fa-check-double" aria-hidden="true"></i> Mark all read
+          </button>
+        </div>
+        <div class="notif-list" id="notif-list" role="list" aria-label="Notifications" aria-live="polite">
+          <!-- Populated by dashboard.js -->
+        </div>
+      </section>
+
+      <!-- ════════ SECTION: PROFILE ════════ -->
+      <section class="content-section" id="section-profile"
+               aria-labelledby="profile-heading" role="region">
+        <h2 id="profile-heading" class="sr-only">My Profile</h2>
+
+        <div style="max-width:900px;margin:0 auto;">
+
+          <!-- Profile Hero -->
+          <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-card);">
+            <div class="profile-cover">
+              <img src="images/banner.jpg" alt="Cover photo" class="profile-cover-img" id="profile-cover-img">
+              <div class="profile-cover-overlay"></div>
+              <button class="profile-cover-edit" aria-label="Change cover photo">
+                <i class="fas fa-camera" aria-hidden="true"></i> Edit Cover
+              </button>
+            </div>
+
+            <div class="profile-info-bar">
+              <div class="flex justify-between items-start flex-wrap gap-md">
+                <div class="profile-avatar-wrapper">
+                  <img src="images/user1.jpg" alt="Profile photo" class="profile-avatar" id="profile-avatar-img">
+                  <button class="profile-avatar-edit" aria-label="Change profile photo">
+                    <i class="fas fa-camera" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <!-- Profile action buttons -->
+                <div class="profile-actions" style="margin-top:var(--space-md);">
+                  <button class="btn btn-primary btn-sm"
+                          onclick="App.showToast('Edit profile feature coming soon!','info')"
+                          aria-label="Edit your profile">
+                    <i class="fas fa-pen" aria-hidden="true"></i> Edit Profile
+                  </button>
+                  <button class="btn btn-outline btn-sm"
+                          onclick="App.showToast('Share profile link copied!','success')"
+                          aria-label="Share your profile">
+                    <i class="fas fa-share" aria-hidden="true"></i> Share
+                  </button>
+                  <button class="btn btn-ghost btn-sm"
+                          onclick="Dashboard.showSection('settings')"
+                          aria-label="Profile settings">
+                    <i class="fas fa-gear" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="profile-details-row">
+                <div>
+                  <h2 class="profile-name" id="profile-name">Your Name</h2>
+                  <div class="profile-handle" id="profile-handle">@handle</div>
+                  <div class="profile-headline" id="profile-headline">Role</div>
+                  <div class="profile-meta" id="profile-meta"></div>
+                </div>
+              </div>
+
+              <!-- Stats -->
+              <div class="profile-stats" role="list" aria-label="Profile statistics">
+                <div class="profile-stat" role="listitem" tabindex="0">
+                  <div class="profile-stat-value" id="profile-posts-count">42</div>
+                  <div class="profile-stat-label">Posts</div>
+                </div>
+                <div class="profile-stat" role="listitem" tabindex="0">
+                  <div class="profile-stat-value" id="profile-followers">1.2K</div>
+                  <div class="profile-stat-label">Followers</div>
+                </div>
+                <div class="profile-stat" role="listitem" tabindex="0">
+                  <div class="profile-stat-value" id="profile-following">367</div>
+                  <div class="profile-stat-label">Following</div>
+                </div>
+                <div class="profile-stat" role="listitem" tabindex="0">
+                  <div class="profile-stat-value" id="profile-connections">500+</div>
+                  <div class="profile-stat-label">Connections</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Tabs -->
+          <div class="profile-tabs" role="tablist" aria-label="Profile sections">
+            <button class="profile-tab active" data-tab="posts" role="tab"
+                    aria-selected="true" id="tab-btn-posts">
+              <i class="fas fa-th" aria-hidden="true"></i> Posts
+            </button>
+            <button class="profile-tab" data-tab="about" role="tab"
+                    aria-selected="false" id="tab-btn-about">
+              <i class="fas fa-info-circle" aria-hidden="true"></i> About
+            </button>
+            <button class="profile-tab" data-tab="showcase" role="tab"
+                    aria-selected="false" id="tab-btn-showcase">
+              <i class="fas fa-star" aria-hidden="true"></i> Showcase
+            </button>
+            <button class="profile-tab" data-tab="experience" role="tab"
+                    aria-selected="false" id="tab-btn-experience">
+              <i class="fas fa-briefcase" aria-hidden="true"></i> Experience
+            </button>
+          </div>
+
+          <!-- Tab Content: Posts -->
+          <div class="profile-tab-content active" id="tab-posts" role="tabpanel" aria-labelledby="tab-btn-posts">
+            <div class="post-grid" id="profile-post-grid"></div>
+          </div>
+
+          <!-- Tab Content: About -->
+          <div class="profile-tab-content" id="tab-about" role="tabpanel" aria-labelledby="tab-btn-about">
+            <div class="bio-card">
+              <h3><i class="fas fa-user" aria-hidden="true"></i> About Me</h3>
+              <p class="bio-text" id="profile-bio">Loading...</p>
+            </div>
+            <div class="bio-card">
+              <h3><i class="fas fa-code" aria-hidden="true"></i> Skills</h3>
+              <div class="skills-grid" id="profile-skills" role="list" aria-label="Skills"></div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Showcase -->
+          <div class="profile-tab-content" id="tab-showcase" role="tabpanel" aria-labelledby="tab-btn-showcase">
+            <div class="showcase-grid" id="profile-showcase-grid"></div>
+          </div>
+
+          <!-- Tab Content: Experience -->
+          <div class="profile-tab-content" id="tab-experience" role="tabpanel" aria-labelledby="tab-btn-experience">
+            <div class="bio-card">
+              <h3><i class="fas fa-briefcase" aria-hidden="true"></i> Experience & Education</h3>
+              <div id="experience-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════ SECTION: SETTINGS ════════ -->
+      <section class="content-section" id="section-settings"
+               aria-labelledby="settings-heading" role="region">
+        <div style="max-width:700px;margin:0 auto;">
+          <div class="page-heading">
+            <div class="page-heading-left">
+              <h2 id="settings-heading">Settings</h2>
+              <p>Manage your account preferences</p>
+            </div>
+          </div>
+
+          <form id="settings-form" novalidate aria-label="Settings form">
+
+            <!-- Account Settings -->
+            <div class="bio-card" style="margin-bottom:var(--space-md);">
+              <h3 style="margin-bottom:var(--space-lg);">
+                <i class="fas fa-user-cog" aria-hidden="true"></i> Account
+              </h3>
+              <div class="form-group" style="margin-bottom:var(--space-md);">
+                <label for="settings-name" style="font-size:var(--fs-xs);font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px;">Display Name</label>
+                <input type="text" id="settings-name" class="create-post-input" style="width:100%;border-radius:var(--radius-md);border:1.5px solid var(--border-color);padding:12px 16px;" placeholder="Your full name">
+              </div>
+              <div class="form-group">
+                <label for="settings-bio" style="font-size:var(--fs-xs);font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px;">Bio</label>
+                <textarea id="settings-bio" class="post-textarea" placeholder="Tell the world about yourself..."></textarea>
+              </div>
+            </div>
+
+            <!-- Theme Settings -->
+            <div class="bio-card" style="margin-bottom:var(--space-md);">
+              <h3 style="margin-bottom:var(--space-lg);">
+                <i class="fas fa-palette" aria-hidden="true"></i> Appearance
+              </h3>
+              <div class="settings-theme-preview">
+                <div class="theme-option selected" id="theme-light" tabindex="0" role="button" aria-pressed="true" aria-label="Light mode">
+                  <div class="theme-preview-box light-preview">☀️</div>
+                  <div class="theme-option-label">Light Mode</div>
+                </div>
+                <div class="theme-option" id="theme-dark" tabindex="0" role="button" aria-pressed="false" aria-label="Dark mode">
+                  <div class="theme-preview-box dark-preview">🌙</div>
+                  <div class="theme-option-label">Dark Mode</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="bio-card" style="margin-bottom:var(--space-md);">
+              <h3 style="margin-bottom:var(--space-lg);">
+                <i class="fas fa-bell" aria-hidden="true"></i> Notifications
+              </h3>
+              <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+                <label class="checkbox-label" style="justify-content:space-between;">
+                  <div>
+                    <div style="font-size:var(--fs-sm);font-weight:600;">Likes & Comments</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);">Get notified when someone interacts with your posts</div>
+                  </div>
+                  <input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--color-primary);" aria-label="Enable likes and comments notifications">
+                </label>
+                <label class="checkbox-label" style="justify-content:space-between;">
+                  <div>
+                    <div style="font-size:var(--fs-sm);font-weight:600;">New Followers</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);">Get notified when someone follows you</div>
+                  </div>
+                  <input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--color-primary);" aria-label="Enable new follower notifications">
+                </label>
+                <label class="checkbox-label" style="justify-content:space-between;">
+                  <div>
+                    <div style="font-size:var(--fs-sm);font-weight:600;">Event Reminders</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);">Get reminded about upcoming events you registered for</div>
+                  </div>
+                  <input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--color-primary);" aria-label="Enable event reminder notifications">
+                </label>
+                <label class="checkbox-label" style="justify-content:space-between;">
+                  <div>
+                    <div style="font-size:var(--fs-sm);font-weight:600;">Marketing Emails</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);">Receive tips, news, and special offers from ConnectX</div>
+                  </div>
+                  <input type="checkbox" style="width:18px;height:18px;accent-color:var(--color-primary);" aria-label="Enable marketing emails">
+                </label>
+              </div>
+            </div>
+
+            <!-- Privacy Settings -->
+            <div class="bio-card" style="margin-bottom:var(--space-xl);">
+              <h3 style="margin-bottom:var(--space-lg);">
+                <i class="fas fa-shield-halved" aria-hidden="true"></i> Privacy
+              </h3>
+              <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+                <label class="checkbox-label" style="justify-content:space-between;">
+                  <div>
+                    <div style="font-size:var(--fs-sm);font-weight:600;">Public Profile</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);">Allow anyone to see your profile and posts</div>
+                  </div>
+                  <input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--color-primary);" aria-label="Make profile public">
+                </label>
+                <label class="checkbox-label" style="justify-content:space-between;">
+                  <div>
+                    <div style="font-size:var(--fs-sm);font-weight:600;">Show Online Status</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);">Let others see when you're active</div>
+                  </div>
+                  <input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--color-primary);" aria-label="Show online status">
+                </label>
+              </div>
+            </div>
+
+            <!-- Save button -->
+            <div style="display:flex;gap:var(--space-sm);justify-content:flex-end;">
+              <button type="button" class="btn btn-ghost" onclick="App.showToast('Changes discarded','info')">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save" aria-hidden="true"></i> Save Changes
+              </button>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="bio-card" style="margin-top:var(--space-xl);border-color:rgba(239,68,68,.20);background:rgba(239,68,68,.03);">
+              <h3 style="color:#ef4444;margin-bottom:var(--space-md);">
+                <i class="fas fa-triangle-exclamation" aria-hidden="true"></i> Danger Zone
+              </h3>
+              <p style="font-size:var(--fs-sm);color:var(--text-muted);margin-bottom:var(--space-md);">
+                Once you delete your account, there is no going back. Please be certain.
+              </p>
+              <button type="button" class="btn" style="background:rgba(239,68,68,.10);color:#ef4444;border:1.5px solid rgba(239,68,68,.30);"
+                      onclick="App.showToast('Account deletion requires email confirmation','info')"
+                      aria-label="Delete your account permanently">
+                <i class="fas fa-trash-can" aria-hidden="true"></i> Delete Account
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </div><!-- /.dashboard-content -->
+  </div><!-- /.main-content -->
+</div><!-- /.app-shell -->
+
+<!-- ════════ CREATE POST MODAL ════════ -->
+<div class="modal-overlay" id="create-post-modal" role="dialog"
+     aria-modal="true" aria-labelledby="modal-heading">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-heading">Create Post</h2>
+      <button class="modal-close" id="modal-close" aria-label="Close modal">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;gap:var(--space-md);margin-bottom:var(--space-md);">
+        <img src="images/user1.jpg" alt="Your avatar" class="avatar avatar-md">
+        <div>
+          <div style="font-weight:var(--fw-bold);font-size:var(--fs-sm);color:var(--text-primary);" id="modal-user-name">Your Name</div>
+          <div style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:2px;">
+            <i class="fas fa-globe-americas" aria-hidden="true"></i> Public
+          </div>
+        </div>
+      </div>
+      <textarea class="post-textarea" id="new-post-text"
+                placeholder="What's on your mind? Share something amazing..."
+                aria-label="Post content" maxlength="2000"></textarea>
+
+      <!-- Media options -->
+      <div style="display:flex;gap:var(--space-sm);margin-top:var(--space-md);flex-wrap:wrap;">
+        <button class="create-post-action photo" aria-label="Add photo">
+          <i class="fas fa-image" aria-hidden="true"></i> Photo
+        </button>
+        <button class="create-post-action video" aria-label="Add video">
+          <i class="fas fa-video" aria-hidden="true"></i> Video
+        </button>
+        <button class="create-post-action event" aria-label="Add event link">
+          <i class="fas fa-calendar" aria-hidden="true"></i> Event
+        </button>
+        <button class="create-post-action" style="color:var(--color-accent-pink);" aria-label="Tag someone">
+          <i class="fas fa-user-tag" aria-hidden="true"></i> Tag
+        </button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div style="display:flex;align-items:center;gap:var(--space-sm);font-size:var(--fs-xs);color:var(--text-muted);">
+        <i class="fas fa-globe-americas" aria-hidden="true"></i> Visible to everyone
+      </div>
+      <button class="btn btn-primary" id="publish-post-btn" aria-label="Publish your post">
+        <i class="fas fa-paper-plane" aria-hidden="true"></i> Publish
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Action Button -->
+<button class="fab" id="fab-create" aria-label="Create new post">
+  <i class="fas fa-plus" aria-hidden="true"></i>
+</button>
+
+<!-- Toast Container (populated by app.js) -->
+<div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
+
+<!-- ════════ SEARCH OVERLAY ════════ -->
+<div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search" style="display:none;">
+  <div class="search-overlay-box">
+    <div class="search-overlay-header">
+      <div class="search-overlay-input-wrap">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input type="search" id="search-overlay-input" placeholder="Search people, posts, events..."
+               autocomplete="off" aria-label="Search" autofocus>
+      </div>
+      <button class="search-close-btn" id="search-close-btn" aria-label="Close search">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="search-results" id="search-results" role="listbox" aria-label="Search results"></div>
+  </div>
+</div>
+
+<!-- Screen-reader only utility class + Search Overlay Styles -->
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ── Search Overlay ── */
+  .search-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    z-index: 9000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 80px;
+    animation: fade-in 0.18s ease;
+  }
+
+  .search-overlay-box {
+    background: var(--surface-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.30);
+    width: 100%;
+    max-width: 620px;
+    overflow: hidden;
+    animation: slide-up 0.2s ease;
+  }
+
+  .search-overlay-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .search-overlay-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex: 1;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
+  .search-overlay-input-wrap input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: var(--fs-base);
+    font-family: var(--font-main);
+    color: var(--text-primary);
+    caret-color: var(--color-primary);
+  }
+
+  .search-overlay-input-wrap input::placeholder { color: var(--text-muted); }
+
+  .search-close-btn {
+    width: 34px; height: 34px;
+    border-radius: var(--radius-full);
+    border: none;
+    background: var(--surface-input);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--transition-base);
+    font-size: 0.9rem;
+  }
+
+  .search-close-btn:hover { background: var(--surface-hover); color: var(--text-primary); }
+
+  .search-results {
+    max-height: 420px;
+    overflow-y: auto;
+    padding: var(--space-sm) 0;
+  }
+
+  .search-result-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-lg);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  .search-result-item:hover,
+  .search-result-item:focus {
+    background: var(--surface-hover);
+    outline: none;
+  }
+
+  .search-result-icon {
+    width: 40px; height: 40px;
+    border-radius: var(--radius-full);
+    background: rgba(99,102,241,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    font-size: 1rem;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .search-result-icon img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .search-result-title {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--text-primary);
+    display: block;
+  }
+
+  .search-result-subtitle {
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .search-result-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    background: rgba(99,102,241,0.10);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .search-empty {
+    padding: var(--space-2xl);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .search-empty i {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: var(--space-sm);
+    opacity: 0.4;
+  }
+
+  .search-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    padding: var(--space-sm) var(--space-lg) 4px;
+  }
+
+  @media (max-width: 640px) {
+    .search-overlay { padding-top: 0; align-items: flex-end; }
+    .search-overlay-box {
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      max-width: 100%;
+    }
+  }
+</style>
+
+<!-- JavaScript — load order matters -->
+<script src="js/darkmode.js"></script>
+<script src="js/app.js"></script>
+<script src="js/feed.js"></script>
+<script src="js/messages.js"></script>
+<script src="js/events.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/dashboard.js"></script>
+
+<script>
+  // ════ SEARCH ENGINE ════
+  const SEARCH_DATA = [
+    // People
+    { type:'person', title:'Alex Morgan',  subtitle:'UX Designer · San Francisco',   section:'profile',       avatar:'images/user1.jpg' },
+    { type:'person', title:'Sarah Chen',   subtitle:'Full Stack Dev · New York',      section:'messages',      avatar:'images/user1.jpg' },
+    { type:'person', title:'David Kim',    subtitle:'Product Manager · Austin',       section:'messages',      avatar:'images/user1.jpg' },
+    { type:'person', title:'Maria Lopez',  subtitle:'Data Scientist · Los Angeles',   section:'feed',          avatar:'images/user1.jpg' },
+    // Posts
+    { type:'post',   title:'Design System Launch 🎨',         subtitle:'Post by Alex Morgan · 2h ago',         section:'feed',     icon:'fa-image' },
+    { type:'post',   title:'AWS Certification Achieved 🚀',   subtitle:'Post by Sarah Chen · 5h ago',          section:'feed',     icon:'fa-file-alt' },
+    { type:'post',   title:'Tech Conference Experience 🤯',   subtitle:'Post by David Kim · 1d ago',           section:'feed',     icon:'fa-image' },
+    // Events
+    { type:'event',  title:'Global Tech Summit 2026',          subtitle:'Jun 15 · Online · Free',               section:'events',   icon:'fa-calendar' },
+    { type:'event',  title:'UX Design Masterclass',            subtitle:'Jun 20 · Online · $49',                section:'events',   icon:'fa-calendar' },
+    { type:'event',  title:'Web3 & Blockchain Forum',          subtitle:'Jul 5 · New York · $99',               section:'events',   icon:'fa-calendar' },
+    { type:'event',  title:'AI & ML Bootcamp',                 subtitle:'Jul 18 · Austin + Online · $149',      section:'events',   icon:'fa-calendar' },
+    // Sections
+    { type:'page',   title:'Messages',       subtitle:'View your conversations',  section:'messages',      icon:'fa-comment-dots' },
+    { type:'page',   title:'Notifications',  subtitle:'See your activity',         section:'notifications', icon:'fa-bell' },
+    { type:'page',   title:'Events Hub',     subtitle:'Discover upcoming events',  section:'events',        icon:'fa-calendar-days' },
+    { type:'page',   title:'Talent Showcase',subtitle:'Browse community projects', section:'showcase',      icon:'fa-star' },
+    { type:'page',   title:'My Profile',     subtitle:'View and edit your profile',section:'profile',       icon:'fa-user-circle' },
+    { type:'page',   title:'Settings',       subtitle:'Manage preferences',        section:'settings',      icon:'fa-gear' },
+  ];
+
+  const badgeColors = {
+    person:'rgba(99,102,241,.12)',
+    post:  'rgba(16,185,129,.12)',
+    event: 'rgba(245,158,11,.12)',
+    page:  'rgba(139,92,246,.12)',
+  };
+  const badgeTxtColors = {
+    person:'var(--color-primary)',
+    post:  '#10b981',
+    event: '#f59e0b',
+    page:  'var(--color-secondary)',
+  };
+
+  function openSearch() {
+    const overlay = document.getElementById('search-overlay');
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('search-overlay-input')?.focus(), 50);
+    renderSearchResults('');
+  }
+
+  function closeSearch() {
+    const overlay = document.getElementById('search-overlay');
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+    const input = document.getElementById('search-overlay-input');
+    if (input) input.value = '';
+  }
+
+  function renderSearchResults(query) {
+    const container = document.getElementById('search-results');
+    if (!container) return;
+
+    const q = query.trim().toLowerCase();
+
+    if (!q) {
+      // Show default suggestions
+      container.innerHTML = `
+        <div class="search-section-label">Quick Actions</div>
+        ${SEARCH_DATA.filter(d => d.type === 'page').map(item => resultHTML(item)).join('')}
+        <div class="search-section-label" style="margin-top:4px;">People</div>
+        ${SEARCH_DATA.filter(d => d.type === 'person').slice(0,3).map(item => resultHTML(item)).join('')}`;
+      return;
+    }
+
+    const matches = SEARCH_DATA.filter(item =>
+      item.title.toLowerCase().includes(q) ||
+      item.subtitle.toLowerCase().includes(q)
+    );
+
+    if (!matches.length) {
+      container.innerHTML = `
+        <div class="search-empty">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          No results for "<strong>${query}</strong>"
+          <p style="font-size:11px;margin-top:6px;">Try searching for people, posts, or events</p>
+        </div>`;
+      return;
+    }
+
+    // Group by type
+    const groups = {};
+    matches.forEach(m => { (groups[m.type] = groups[m.type] || []).push(m); });
+    const labels = { person:'People', post:'Posts', event:'Events', page:'Pages' };
+
+    container.innerHTML = Object.entries(groups).map(([type, items]) =>
+      `<div class="search-section-label">${labels[type] || type}</div>
+       ${items.map(item => resultHTML(item)).join('')}`
+    ).join('');
+  }
+
+  function resultHTML(item) {
+    const bc  = badgeColors[item.type] || 'rgba(99,102,241,.10)';
+    const btc = badgeTxtColors[item.type] || 'var(--color-primary)';
+    const iconPart = item.avatar
+      ? `<img src="${item.avatar}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+      : `<i class="fas ${item.icon || 'fa-circle'}" aria-hidden="true"></i>`;
+
+    return `
+      <button class="search-result-item" role="option"
+              onclick="closeSearch();Dashboard.showSection('${item.section}');"
+              aria-label="${item.title}">
+        <div class="search-result-icon" style="${item.avatar ? '' : `background:${bc};color:${btc};`}">${iconPart}</div>
+        <div style="flex:1;min-width:0;">
+          <span class="search-result-title">${item.title}</span>
+          <span class="search-result-subtitle">${item.subtitle}</span>
+        </div>
+        <span class="search-result-badge"
+              style="background:${bc};color:${btc};">${item.type}</span>
+      </button>`;
+  }
+
+  // ════ DOMContentLoaded ════
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // ── Dropdown logout ──
+    const dropLogout = document.getElementById('dropdown-logout');
+    if (dropLogout) {
+      dropLogout.addEventListener('click', () => {
+        if (confirm('Log out of ConnectX?')) App.logout();
+      });
+    }
+
+    // ── Single user avatar across all elements ──
+    setTimeout(() => {
+      const user = App.currentUser;
+      if (!user) return;
+      const avatar = user.avatar || 'images/user1.jpg';
+      const name   = user.name   || 'User';
+      const role   = user.role   || 'Member';
+
+      // All avatar img elements pointing to default
+      document.querySelectorAll('img.avatar').forEach(img => {
+        if (img.src.includes('user1.jpg') || img.src.includes('user2.jpg') || img.src.includes('user3.jpg')) {
+          // Only update the "you" avatars, not other people's posts
+          if (img.id && (img.id.includes('sidebar') || img.id.includes('header') ||
+              img.id.includes('feed-sidebar') || img.id.includes('create-post') ||
+              img.id.includes('profile-avatar'))) {
+            img.src = avatar;
+          }
+        }
+      });
+
+      // Named IDs
+      const setEl = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+      const setSrc = (id, src) => { const e = document.getElementById(id); if (e) e.src = src; };
+
+      setSrc('sidebar-avatar',      avatar);
+      setSrc('header-avatar',       avatar);
+      setSrc('feed-sidebar-avatar', avatar);
+      setSrc('create-post-avatar',  avatar);
+      setSrc('profile-avatar-img',  avatar);
+      setEl('sidebar-user-name',    name);
+      setEl('sidebar-user-role',    role);
+      setEl('header-user-name',     name.split(' ')[0]);
+      setEl('feed-user-name',       name);
+      setEl('feed-user-role',       role);
+      setEl('modal-user-name',      name);
+    }, 120);
+
+    // ── Wire header search to open overlay ──
+    const headerSearch = document.getElementById('header-search');
+    if (headerSearch) {
+      headerSearch.addEventListener('focus', openSearch);
+      headerSearch.addEventListener('click', openSearch);
+    }
+
+    // ── Search overlay input live filter ──
+    const overlayInput = document.getElementById('search-overlay-input');
+    if (overlayInput) {
+      overlayInput.addEventListener('input', (e) => renderSearchResults(e.target.value));
+      overlayInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeSearch();
+        if (e.key === 'Enter') {
+          const first = document.querySelector('.search-result-item');
+          first?.click();
+        }
+      });
+    }
+
+    // ── Close button ──
+    document.getElementById('search-close-btn')?.addEventListener('click', closeSearch);
+
+    // ── Close on overlay background click ──
+    document.getElementById('search-overlay')?.addEventListener('click', (e) => {
+      if (e.target.id === 'search-overlay') closeSearch();
+    });
+
+    // ── Showcase filter chips ──
+    document.querySelectorAll('#section-showcase .filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#section-showcase .filter-chip').forEach(c => {
+          c.classList.remove('active');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        chip.classList.add('active');
+        chip.setAttribute('aria-pressed', 'true');
+        App.showToast(`Filtering by ${chip.textContent.trim()}`, 'info', 1500);
+      });
+    });
+  });
+</script>
+</body>
+</html>
