@@ -76,6 +76,20 @@ const Dashboard = {
         const main = document.querySelector('.main-content');
         if (main) main.classList.toggle('sidebar-collapsed', this.sidebarCollapsed);
         collapseBtn.setAttribute('aria-expanded', String(!this.sidebarCollapsed));
+        
+        // Toggle icon, titles, and labels
+        const icon = document.getElementById('collapse-icon');
+        if (icon) {
+          if (this.sidebarCollapsed) {
+            icon.className = 'fas fa-angles-right';
+            collapseBtn.title = 'Expand Sidebar';
+            collapseBtn.setAttribute('aria-label', 'Expand Sidebar');
+          } else {
+            icon.className = 'fas fa-angles-left';
+            collapseBtn.title = 'Collapse Sidebar';
+            collapseBtn.setAttribute('aria-label', 'Collapse Sidebar');
+          }
+        }
       });
     }
 
@@ -131,12 +145,18 @@ const Dashboard = {
     // Activate nav links
     document.querySelectorAll(`[data-section="${sectionId}"]`).forEach(l => l.classList.add('active'));
 
+    // Show/hide create-post FAB (only visible on feed)
+    const fab = document.getElementById('fab-create');
+    if (fab) {
+      fab.style.display = (sectionId === 'feed') ? 'flex' : 'none';
+    }
+
     // Update page title in header
     const titles = {
       feed:          'Home Feed',
       messages:      'Messages',
       events:        'Events',
-      showcase:      'Talent Showcase',
+      showcase:      'Talent',
       notifications: 'Notifications',
       profile:       'My Profile',
       settings:      'Settings'
@@ -193,12 +213,6 @@ const Dashboard = {
           App.showToast(`Searching for "${q}"...`, 'info', 1500);
         }
       }, 400));
-    }
-
-    // Dark mode toggle in header
-    const dmBtn = document.getElementById('header-theme-toggle');
-    if (dmBtn) {
-      dmBtn.addEventListener('click', () => DarkMode.toggle());
     }
   },
 
@@ -343,9 +357,6 @@ const Dashboard = {
    * Settings section
    */
   initSettings() {
-    // Theme options already handled by DarkMode.js
-    DarkMode.wireToggleButtons?.();
-
     // Account settings form
     const settingsForm = document.getElementById('settings-form');
     if (settingsForm) {

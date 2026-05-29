@@ -33,48 +33,51 @@ const Feed = {
     this.posts = [
       {
         id: 1,
-        user: { name: 'Alex Morgan', handle: '@alexmorgan', avatar: 'images/user1.jpg', role: 'UX Designer' },
-        content: 'Just shipped a brand new design system for our startup! 🎨 Months of hard work finally paying off. The team is absolutely amazing. Check out the results! #design #startup #ux',
-        image: 'images/post1.jpg',
-        likes: 248,
+        user: { name: 'Kunal Shah', handle: '@kunalshah', avatar: 'images/user1.jpg', role: 'Software Engineering Intern' },
+        content: 'Senior Dev: "Don\'t worry, our codebase is exceptionally clean, fully documented, and highly modular!" 😇\n\nThe codebase:\n* 4,200 lines of spaghetti JavaScript inside a single index.html script tag.\n* Core functions named helper(), helper2(), helper_final_v2().\n* 67 open merge conflicts waiting for my approval.\n* A comment that says: // TODO: DO NOT TOUCH THIS, IT WILL BREAK THE PROD DATABASE, I DON\'T KNOW WHY.\n\nCurrently refactoring this while drinking my 4th cup of double-shot espresso today. ☕️ Send help or dry-run scripts. #internship #javascript #devlife #refactoring #spaghettiCode',
+        image: null,
+        likes: 312,
         comments: 34,
         shares: 18,
         saved: false,
         liked: false,
-        time: new Date(Date.now() - 2*60*60*1000).toISOString(),
+        time: new Date(Date.now() - 1*60*60*1000).toISOString(),
         commentsData: [
-          { user: 'Sarah Chen', avatar: 'images/user2.jpg', text: 'This looks absolutely stunning! 🔥' },
-          { user: 'David Kim',  avatar: 'images/user3.jpg', text: 'Incredible work, love the color palette!' }
+          { user: 'Aanya Patel', avatar: 'images/user2.jpg', text: 'I feel this in my soul. Just wait until you inspect the production database schema... 💀' },
+          { user: 'Rohit Sharma',  avatar: 'images/user3.jpg', text: 'Have you tried deleting the node_modules folder and running npm install? That\'s about as much refactoring as I do. 😂' },
+          { user: 'Emma Rodriguez', avatar: 'images/user1.jpg', text: 'Wait, who wrote that helper_final_v2() function? Please don\'t tell me it was my git blame from 2024...' }
         ]
       },
       {
         id: 2,
-        user: { name: 'Sarah Chen', handle: '@sarahchen', avatar: 'images/user2.jpg', role: 'Full Stack Dev' },
-        content: 'Excited to announce I just completed the AWS Solutions Architect certification! 🚀 The journey was challenging but totally worth it. If anyone wants study tips, drop a comment below! #aws #cloud #devops',
-        image: null,
-        likes: 512,
+        user: { name: 'Sarah Chen', handle: '@sarahchen', avatar: 'images/user2.jpg', role: 'Full Stack Dev Intern' },
+        content: 'Day 15 of my internship at ConnectX: Just pushed my very first hotfix directly to production and didn\'t crash the server! 🚀🎉\n\nHuge thanks to the engineering team for the thorough code reviews and for not laughing at my initial pull request which had 47 comments. Pro tip for incoming interns: keep a notepad next to your keyboard, ask "why" at least ten times a day, and never, ever git push --force on main. 📝💻 #webdev #frontend #prod #milestone #internship',
+        image: 'images/post1.jpg',
+        likes: 524,
         comments: 67,
         shares: 43,
         saved: false,
         liked: false,
-        time: new Date(Date.now() - 5*60*60*1000).toISOString(),
+        time: new Date(Date.now() - 3*60*60*1000).toISOString(),
         commentsData: [
-          { user: 'Alex Morgan', avatar: 'images/user1.jpg', text: 'Congratulations! Well deserved! 🎉' }
+          { user: 'Kunal Shah', avatar: 'images/user1.jpg', text: 'Huge congrats Sarah! Meanwhile, my PR is still waiting for review after 4 days. Send your reviewers over! 😂' },
+          { user: 'David Kim', avatar: 'images/user3.jpg', text: 'Pushed to prod on a Friday and the server is still running. You have officially passed the developer test! 🏆' }
         ]
       },
       {
         id: 3,
-        user: { name: 'David Kim', handle: '@davidkim', avatar: 'images/user3.jpg', role: 'Product Manager' },
-        content: 'Attending my first tech conference this week and the energy here is unreal! So many brilliant minds in one place 🤯 Networking is truly the lifeblood of innovation. #techconf #networking #innovation',
+        user: { name: 'Emma Rodriguez', handle: '@emmarodriguez', avatar: 'images/user3.jpg', role: 'UI/UX Design Lead' },
+        content: 'Hot take: Flat design is officially obsolete. Glassmorphism, tailored gradients, and premium micro-animations are the only way to build state-of-the-art applications in 2026. If your buttons don\'t have a satisfying spring scaling on hover, you are losing user engagement. ✨🎨\n\nLet\'s settle the debate: are you Team Clean Minimalist or Team Dynamic Glass? Let me know in the comments! #uiux #design #figma #uxdesign #webdevelopment',
         image: 'images/post2.jpg',
-        likes: 189,
+        likes: 289,
         comments: 22,
         shares: 11,
         saved: false,
         liked: false,
-        time: new Date(Date.now() - 24*60*60*1000).toISOString(),
+        time: new Date(Date.now() - 18*60*60*1000).toISOString(),
         commentsData: [
-          { user: 'Sarah Chen', avatar: 'images/user2.jpg', text: 'Wish I could be there! Share your notes?' }
+          { user: 'Sarah Chen', avatar: 'images/user2.jpg', text: 'Team Dynamic Glass all day! The visual feedback makes the app feel so alive.' },
+          { user: 'David Kim',  avatar: 'images/user3.jpg', text: 'It looks absolutely stunning, Emma! Right up until the developers see the CSS backdrop-filter performance on mobile devices... 😅' }
         ]
       }
     ];
@@ -98,12 +101,12 @@ const Feed = {
 
     const stories = [
       { name: 'Your Story', avatar: App.currentUser?.avatar || 'images/user1.jpg', isAdd: true },
-      { name: 'Alex M.',    avatar: 'images/user1.jpg', viewed: false },
+      { name: 'Kunal S.',     avatar: 'images/user1.jpg', viewed: false },
       { name: 'Sarah C.',   avatar: 'images/user2.jpg', viewed: false },
-      { name: 'David K.',   avatar: 'images/user3.jpg', viewed: true  },
-      { name: 'Maria L.',   avatar: 'images/user1.jpg', viewed: false },
-      { name: 'Jake W.',    avatar: 'images/user2.jpg', viewed: true  },
-      { name: 'Emma S.',    avatar: 'images/user3.jpg', viewed: false },
+      { name: 'Emma R.',    avatar: 'images/user3.jpg', viewed: true  },
+      { name: 'Aanya P.',   avatar: 'images/user2.jpg', viewed: false },
+      { name: 'Rohit S.',    avatar: 'images/user3.jpg', viewed: true  },
+      { name: 'David K.',    avatar: 'images/user3.jpg', viewed: false },
     ];
 
     container.innerHTML = stories.map((s, i) => {
@@ -193,7 +196,7 @@ const Feed = {
       <div class="post-actions" role="group" aria-label="Post actions">
         <button class="post-action-btn ${post.liked ? 'liked' : ''}"
                 id="like-btn-${post.id}"
-                onclick="Feed.toggleLike(${post.id})"
+                onclick="Feed.toggleLike(event, ${post.id})"
                 aria-pressed="${post.liked}"
                 aria-label="${post.liked ? 'Unlike' : 'Like'} post">
           <i class="${post.liked ? 'fas' : 'far'} fa-heart"></i>
@@ -243,6 +246,7 @@ const Feed = {
    */
   formatText(text) {
     return text
+      .replace(/\n/g, '<br>')
       .replace(/(#\w+)/g, '<span class="hashtag">$1</span>')
       .replace(/(@\w+)/g, '<span class="hashtag">$1</span>');
   },
@@ -273,9 +277,43 @@ const Feed = {
   },
 
   /**
+   * Spawn dynamic heart splash particles around liked buttons
+   */
+  spawnLikeParticles(event, button) {
+    const rect = button.getBoundingClientRect();
+    const x = event ? event.clientX : rect.left + rect.width / 2;
+    const y = event ? event.clientY : rect.top + rect.height / 2;
+
+    const colors = ['#ef4444', '#f43f5e', '#ec4899', '#f472b6', '#a855f7', '#6366f1'];
+    const emojis = ['❤️', '💖', '✨', '🔥', '🌸', '⚡️'];
+
+    for (let i = 0; i < 7; i++) {
+      const particle = document.createElement('span');
+      particle.className = 'heart-particle';
+      particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+      const angle = (Math.random() * 360 * Math.PI) / 180;
+      const velocity = 50 + Math.random() * 70; // Trajectory travel distance
+      const dx = Math.cos(angle) * velocity;
+      const dy = Math.sin(angle) * velocity - 25; // Float upwards slightly
+
+      particle.style.left = `${x}px`;
+      particle.style.top = `${y}px`;
+      particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.setProperty('--dx', `${dx}px`);
+      particle.style.setProperty('--dy', `${dy}px`);
+      particle.style.setProperty('--ds', `${0.3 + Math.random() * 0.7}`);
+
+      document.body.appendChild(particle);
+      setTimeout(() => particle.remove(), 850);
+    }
+  },
+
+  /**
    * Toggle like on a post
    */
-  toggleLike(postId) {
+  toggleLike(e, postId) {
+    if (e) e.stopPropagation();
     const post = this.posts.find(p => p.id === postId);
     if (!post) return;
 
@@ -287,6 +325,11 @@ const Feed = {
       btn.classList.toggle('liked', post.liked);
       btn.setAttribute('aria-pressed', post.liked);
       btn.querySelector('i').className = `${post.liked ? 'fas' : 'far'} fa-heart`;
+
+      // Spark heart particles on true likes
+      if (post.liked) {
+        this.spawnLikeParticles(e, btn);
+      }
     }
 
     const likesEl = document.getElementById(`post-likes-${postId}`);
@@ -421,10 +464,10 @@ const Feed = {
     const suggestedContainer = document.getElementById('suggested-users');
     if (suggestedContainer) {
       const users = [
-        { name: 'Maria Lopez',  role: 'Data Scientist',   avatar: 'images/user1.jpg' },
-        { name: 'Jake Wilson',  role: 'DevOps Engineer',  avatar: 'images/user2.jpg' },
-        { name: 'Emma Stone',   role: 'Product Designer', avatar: 'images/user3.jpg' },
-        { name: 'Ryan Park',    role: 'AI Researcher',    avatar: 'images/user1.jpg' },
+        { name: 'Aanya Patel',  role: 'Lead Data Scientist', avatar: 'images/user2.jpg' },
+        { name: 'Rohit Sharma',  role: 'DevOps Architect',    avatar: 'images/user3.jpg' },
+        { name: 'Liam Vance',   role: 'Senior Frontend Dev', avatar: 'images/user1.jpg' },
+        { name: 'Sophia Loren', role: 'Engineering Manager', avatar: 'images/user2.jpg' },
       ];
 
       suggestedContainer.innerHTML = users.map((u, i) => `
@@ -444,11 +487,11 @@ const Feed = {
     const trendingContainer = document.getElementById('trending-tags');
     if (trendingContainer) {
       const tags = [
-        { name: '#WebDev',     count: '12.4K posts' },
-        { name: '#AITools',    count: '8.9K posts'  },
-        { name: '#TechConf',   count: '5.2K posts'  },
-        { name: '#OpenSource', count: '4.1K posts'  },
-        { name: '#RemoteWork', count: '3.8K posts'  },
+        { name: '#productionCrash', count: '14.2K posts' },
+        { name: '#internship',      count: '9.8K posts'  },
+        { name: '#centercss',       count: '7.1K posts'  },
+        { name: '#coffeeOverdose',  count: '5.4K posts'  },
+        { name: '#gitconflict',     count: '3.9K posts'  },
       ];
 
       trendingContainer.innerHTML = tags.map(t => `

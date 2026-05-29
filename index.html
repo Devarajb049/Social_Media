@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ConnectX — The premium social platform connecting professionals, creators, and communities worldwide.">
+  <meta name="description"
+    content="ConnectX — The premium social platform connecting professionals, creators, and communities worldwide.">
   <meta name="keywords" content="social network, professional networking, community, events, talent">
   <meta name="theme-color" content="#6366f1">
   <title>ConnectX — Connect. Create. Grow.</title>
@@ -14,14 +16,15 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/darkmode.css">
   <link rel="stylesheet" href="css/responsive.css">
 
   <style>
@@ -30,18 +33,21 @@
     /* Navbar */
     .landing-nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 70px;
-      background: rgba(255,255,255,0.90);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(99,102,241,0.10);
+      background: var(--surface-card);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid var(--border-color);
       z-index: var(--z-sticky);
       transition: all var(--transition-base);
     }
 
     .landing-nav.scrolled {
-      box-shadow: 0 4px 24px rgba(99,102,241,0.10);
+      box-shadow: var(--shadow-card);
+      background: var(--surface-overlay);
     }
 
     .nav-inner {
@@ -102,7 +108,10 @@
       font-family: var(--font-main);
     }
 
-    .nav-link:hover { background: var(--surface-hover); color: var(--color-primary); }
+    .nav-link:hover {
+      background: var(--surface-hover);
+      color: var(--color-primary);
+    }
 
     .nav-actions {
       display: flex;
@@ -113,24 +122,14 @@
     /* ── Hero Section ── */
     .hero {
       min-height: 100vh;
-      background: var(--gradient-hero);
+      background: radial-gradient(circle 100px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 240, 255, 0.35) 0%, rgba(0, 240, 255, 0.08) 50%, transparent 100%), radial-gradient(circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(124, 58, 237, 0.16) 0%, rgba(255, 46, 147, 0.04) 50%, transparent 100%), var(--surface-bg);
       position: relative;
       display: flex;
       align-items: center;
       overflow: hidden;
       padding-top: 70px;
+      transition: background 0.1s ease;
     }
-
-    /* Animated orbs */
-    .hero-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.20;
-    }
-    .hero-orb-1 { width:500px; height:500px; background:#6366f1; top:-100px; left:-100px; animation: float 8s ease-in-out infinite; }
-    .hero-orb-2 { width:400px; height:400px; background:#8b5cf6; bottom:-80px; right:-80px; animation: float 10s ease-in-out infinite reverse; }
-    .hero-orb-3 { width:300px; height:300px; background:#06b6d4; top:40%; left:40%; animation: float 7s ease-in-out infinite 2s; }
 
     /* Floating UI cards */
     .hero-float-cards {
@@ -141,9 +140,10 @@
 
     .float-card {
       position: absolute;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: var(--glass-blur-light);
+      -webkit-backdrop-filter: var(--glass-blur-light);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-lg);
       padding: var(--space-md) var(--space-lg);
       color: #fff;
@@ -153,16 +153,44 @@
       align-items: center;
       gap: var(--space-sm);
       animation: float 6s ease-in-out infinite;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.20);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.30);
+      transition: all var(--transition-base);
     }
 
-    .float-card-1 { top: 20%; left: 5%; animation-delay: 0s; }
-    .float-card-2 { top: 60%; left: 3%; animation-delay: 1.5s; }
-    .float-card-3 { top: 15%; right: 5%; animation-delay: 0.8s; }
-    .float-card-4 { top: 55%; right: 3%; animation-delay: 2.2s; }
-    .float-card-5 { bottom: 20%; left: 30%; animation-delay: 3s; }
+    .float-card-1 {
+      top: 20%;
+      left: 5%;
+      animation-delay: 0s;
+    }
 
-    .float-card i { font-size: 1.1rem; color: var(--color-accent); }
+    .float-card-2 {
+      top: 60%;
+      left: 3%;
+      animation-delay: 1.5s;
+    }
+
+    .float-card-3 {
+      top: 15%;
+      right: 5%;
+      animation-delay: 0.8s;
+    }
+
+    .float-card-4 {
+      top: 55%;
+      right: 3%;
+      animation-delay: 2.2s;
+    }
+
+    .float-card-5 {
+      bottom: 20%;
+      left: 30%;
+      animation-delay: 3s;
+    }
+
+    .float-card i {
+      font-size: 1.1rem;
+      color: var(--color-accent);
+    }
 
     /* Hero Content */
     .hero-content {
@@ -179,31 +207,32 @@
       align-items: center;
       gap: var(--space-sm);
       padding: 6px 18px;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(124, 58, 237, 0.06);
+      border: 1px solid rgba(124, 58, 237, 0.15);
       border-radius: var(--radius-full);
-      color: rgba(255,255,255,0.90);
+      color: var(--color-primary);
       font-size: var(--fs-xs);
       font-weight: var(--fw-semibold);
       margin-bottom: var(--space-xl);
       letter-spacing: 0.04em;
     }
 
-    .hero-badge i { color: #fbbf24; }
+    .hero-badge i {
+      color: #f59e0b;
+    }
 
     .hero-title {
       font-family: var(--font-heading);
       font-size: clamp(2.5rem, 7vw, 5rem);
       font-weight: var(--fw-extrabold);
-      color: #fff;
+      color: var(--text-primary);
       line-height: 1.08;
       margin-bottom: var(--space-lg);
       letter-spacing: -0.02em;
     }
 
     .hero-title .accent {
-      background: linear-gradient(135deg, #818cf8, #06b6d4);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent-pink));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -211,7 +240,7 @@
 
     .hero-subtitle {
       font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: rgba(255,255,255,0.75);
+      color: var(--text-secondary);
       max-width: 640px;
       margin: 0 auto var(--space-2xl);
       line-height: 1.7;
@@ -229,8 +258,8 @@
     .btn-hero-primary {
       padding: 15px 36px;
       border-radius: var(--radius-full);
-      background: #fff;
-      color: var(--color-primary);
+      background: var(--gradient-button);
+      color: #fff;
       font-size: var(--fs-base);
       font-weight: var(--fw-bold);
       text-decoration: none;
@@ -238,26 +267,35 @@
       align-items: center;
       gap: var(--space-sm);
       transition: all var(--transition-spring);
-      box-shadow: 0 4px 24px rgba(255,255,255,0.20);
+      box-shadow: var(--shadow-button);
     }
-    .btn-hero-primary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 40px rgba(255,255,255,0.35); color: var(--color-primary-dark); }
+
+    .btn-hero-primary:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.45);
+      color: #fff;
+    }
 
     .btn-hero-outline {
       padding: 15px 36px;
       border-radius: var(--radius-full);
       background: transparent;
-      color: #fff;
+      color: var(--color-primary);
       font-size: var(--fs-base);
       font-weight: var(--fw-semibold);
-      border: 2px solid rgba(255,255,255,0.40);
+      border: 2px solid var(--color-primary);
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: var(--space-sm);
       transition: all var(--transition-base);
-      backdrop-filter: blur(8px);
     }
-    .btn-hero-outline:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.70); color: #fff; transform: translateY(-2px); }
+
+    .btn-hero-outline:hover {
+      background: rgba(124, 58, 237, 0.08);
+      color: var(--color-primary-dark);
+      transform: translateY(-2px);
+    }
 
     /* Hero Badges / Social Proof */
     .hero-badges {
@@ -277,14 +315,14 @@
     .hero-stat-value {
       font-size: var(--fs-2xl);
       font-weight: var(--fw-extrabold);
-      color: #fff;
+      color: var(--text-primary);
       font-family: var(--font-heading);
       line-height: 1;
     }
 
     .hero-stat-label {
       font-size: var(--fs-xs);
-      color: rgba(255,255,255,0.60);
+      color: var(--text-muted);
       font-weight: var(--fw-medium);
       margin-top: 3px;
     }
@@ -292,7 +330,7 @@
     .hero-stat-sep {
       width: 1px;
       height: 40px;
-      background: rgba(255,255,255,0.20);
+      background: var(--border-color);
     }
 
     /* Scroll indicator */
@@ -301,7 +339,7 @@
       bottom: var(--space-xl);
       left: 50%;
       transform: translateX(-50%);
-      color: rgba(255,255,255,0.60);
+      color: var(--text-muted);
       font-size: 0.8rem;
       display: flex;
       flex-direction: column;
@@ -326,7 +364,7 @@
       align-items: center;
       gap: 6px;
       padding: 4px 14px;
-      background: rgba(99,102,241,0.10);
+      background: rgba(99, 102, 241, 0.10);
       color: var(--color-primary);
       border-radius: var(--radius-full);
       font-size: var(--fs-xs);
@@ -354,8 +392,9 @@
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: var(--space-xl);
+      width: 100%;
     }
 
     .feature-card {
@@ -372,7 +411,9 @@
     .feature-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 3px;
       background: var(--gradient-main);
     }
@@ -386,7 +427,7 @@
       width: 60px;
       height: 60px;
       border-radius: var(--radius-lg);
-      background: rgba(99,102,241,0.10);
+      background: rgba(99, 102, 241, 0.10);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -424,7 +465,10 @@
       font-weight: var(--fw-medium);
     }
 
-    .feature-list-item i { color: #10b981; font-size: 0.8rem; }
+    .feature-list-item i {
+      color: #10b981;
+      font-size: 0.8rem;
+    }
 
     /* ── Testimonials ── */
     .testimonials-section {
@@ -530,7 +574,7 @@
     }
 
     .cta-content p {
-      color: rgba(255,255,255,0.75);
+      color: rgba(255, 255, 255, 0.75);
       font-size: var(--fs-md);
       margin-bottom: var(--space-2xl);
     }
@@ -538,7 +582,7 @@
     /* ── Footer ── */
     .landing-footer {
       background: #0d0d1a;
-      color: rgba(255,255,255,0.75);
+      color: rgba(255, 255, 255, 0.75);
       padding: var(--space-3xl) 0 var(--space-xl);
     }
 
@@ -563,34 +607,67 @@
     .footer-brand-desc {
       font-size: var(--fs-sm);
       line-height: 1.7;
-      color: rgba(255,255,255,0.50);
+      color: rgba(255, 255, 255, 0.50);
       max-width: 280px;
     }
 
     .footer-socials {
       display: flex;
+      flex-wrap: wrap;
       gap: var(--space-sm);
       margin-top: var(--space-lg);
+      align-items: center;
     }
 
     .footer-social-btn {
       width: 38px;
       height: 38px;
       border-radius: var(--radius-full);
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.65);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.65);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.95rem;
       transition: all var(--transition-base);
       text-decoration: none;
+      flex-shrink: 0;
     }
 
     .footer-social-btn:hover {
       background: var(--color-primary);
       color: #fff;
       transform: translateY(-2px);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-xl);
+    }
+
+    @media (max-width: 576px) {
+      .footer-socials {
+        justify-content: center;
+      }
+
+      .footer-social-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer-social-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+      }
+
+      .footer-socials {
+        gap: 6px;
+      }
     }
 
     .footer-col h4 {
@@ -610,15 +687,17 @@
 
     .footer-link {
       font-size: var(--fs-sm);
-      color: rgba(255,255,255,0.50);
+      color: rgba(255, 255, 255, 0.50);
       text-decoration: none;
       transition: color var(--transition-fast);
     }
 
-    .footer-link:hover { color: var(--color-primary-light); }
+    .footer-link:hover {
+      color: var(--color-primary-light);
+    }
 
     .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       padding-top: var(--space-lg);
       display: flex;
       align-items: center;
@@ -626,401 +705,567 @@
       flex-wrap: wrap;
       gap: var(--space-md);
       font-size: var(--fs-xs);
-      color: rgba(255,255,255,0.35);
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* CONNECTX RESPONSIVE PATCH */
+    @media (max-width:1200px) {
+      .landing-footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width:768px) {
+
+      .features-grid,
+      .testimonials-grid,
+      .landing-footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .footer-socials {
+        justify-content: center;
+      }
+
+      .btn-hero-primary,
+      .btn-hero-outline {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 24px;
+        font-size: var(--fs-sm);
+      }
+    }
+
+    @media (max-width:480px) {
+
+      .btn-hero-primary,
+      .btn-hero-outline {
+        padding: 12px 20px;
+        font-size: var(--fs-xs);
+      }
+
+      .hero-stat-sep {
+        display: none;
+      }
+
+      .hero-badges {
+        gap: var(--space-md);
+      }
+    }
+
+    /* ── Loading Screen ── */
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+
+    .loading-logo {
+      width: 120px;
+      height: 120px;
+      animation: spin-pulse 2.5s ease-in-out infinite;
+    }
+
+    .loading-logo svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.6));
+    }
+
+    .loading-text {
+      font-family: var(--font-heading);
+      font-size: var(--fs-xl);
+      font-weight: var(--fw-extrabold);
+      background: var(--gradient-main);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.01em;
+    }
+
+    .loading-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: var(--space-md);
+    }
+
+    .loading-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      animation: bounce-loading 1.4s ease-in-out infinite;
+    }
+
+    .loading-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes spin-pulse {
+      0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: rotate(180deg) scale(1.1);
+      }
+      100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounce-loading {
+      0%, 80%, 100% {
+        transform: scale(0) translateY(0);
+        opacity: 0.5;
+      }
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- Skip Navigation -->
-<a href="#main-content" class="skip-link">Skip to main content</a>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="loadingLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366f1" />
+              <stop offset="50%" stop-color="#8b5cf6" />
+              <stop offset="100%" stop-color="#06b6d4" />
+            </linearGradient>
+          </defs>
+          <line x1="25" y1="50" x2="75" y2="50" stroke="url(#loadingLogoGrad)" stroke-width="8" stroke-dasharray="2 2" stroke-linecap="round" />
+          <path d="M25 50 L50 25 L75 50 L50 75 Z" fill="none" stroke="url(#loadingLogoGrad)" stroke-width="6" stroke-linejoin="round" />
+          <circle cx="25" cy="50" r="10" fill="url(#loadingLogoGrad)" />
+          <circle cx="75" cy="50" r="10" fill="url(#loadingLogoGrad)" />
+          <circle cx="50" cy="25" r="7" fill="#ec4899" />
+          <circle cx="50" cy="75" r="7" fill="#06b6d4" />
+          <text x="50" y="56" font-family="'Poppins', sans-serif" font-weight="900" font-size="18" fill="#fff" text-anchor="middle">X</text>
+        </svg>
+      </div>
+      <div class="loading-text">ConnectX</div>
+      <div class="loading-dots">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+      </div>
+    </div>
+  </div>
 
-<!-- ════════════════════════════════════════════
+  <!-- Skip Navigation -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ════════════════════════════════════════════
      NAVBAR
 ════════════════════════════════════════════ -->
-<nav class="landing-nav" role="navigation" aria-label="Main navigation" id="landing-nav">
-  <div class="nav-inner">
-    <!-- Brand -->
-    <a href="index.html" class="nav-brand" aria-label="ConnectX home">
-      <img src="images/logo.png" alt="ConnectX logo" class="nav-logo">
-      <span class="nav-brand-name">ConnectX</span>
-    </a>
-
-
-    <!-- Actions -->
-    <div class="nav-actions">
-      <!-- Dark Mode Toggle -->
-      <button class="theme-toggle-icon" data-theme-toggle id="nav-theme-toggle"
-              aria-label="Toggle dark mode" title="Toggle dark mode">
-        <i class="fas fa-sun sun-icon theme-icon"></i>
-        <i class="fas fa-moon moon-icon"></i>
-      </button>
-
-      <a href="login.html" class="btn btn-ghost btn-sm" aria-label="Log in to ConnectX">
-        Log In
+  <nav class="landing-nav" role="navigation" aria-label="Main navigation" id="landing-nav">
+    <div class="nav-inner">
+      <!-- Brand -->
+      <a href="index.html" class="nav-brand" aria-label="ConnectX home">
+        <svg class="connectx-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366f1" />
+              <stop offset="50%" stop-color="#8b5cf6" />
+              <stop offset="100%" stop-color="#06b6d4" />
+            </linearGradient>
+          </defs>
+          <line x1="25" y1="50" x2="75" y2="50" stroke="url(#logoGrad)" stroke-width="8" stroke-dasharray="2 2"
+            stroke-linecap="round" />
+          <path d="M25 50 L50 25 L75 50 L50 75 Z" fill="none" stroke="url(#logoGrad)" stroke-width="6"
+            stroke-linejoin="round" />
+          <circle cx="25" cy="50" r="10" fill="url(#logoGrad)" />
+          <circle cx="75" cy="50" r="10" fill="url(#logoGrad)" />
+          <circle cx="50" cy="25" r="7" fill="#ec4899" />
+          <circle cx="50" cy="75" r="7" fill="#06b6d4" />
+          <text x="50" y="56" font-family="'Poppins', sans-serif" font-weight="900" font-size="18" fill="#fff"
+            text-anchor="middle">X</text>
+        </svg>
+        <span class="nav-brand-name">ConnectX</span>
       </a>
-      <a href="signup.html" class="btn btn-primary btn-sm" aria-label="Sign up for ConnectX">
-        <i class="fas fa-rocket"></i> Get Started
-      </a>
 
-      <!-- Mobile menu button -->
-      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
-        <i class="fas fa-bars"></i>
-      </button>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost btn-sm" aria-label="Log in to ConnectX">
+          Log In
+        </a>
+        <a href="signup.html" class="btn btn-primary btn-sm" aria-label="Sign up for ConnectX">
+          <i class="fas fa-rocket"></i> Get Started
+        </a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- ════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
      HERO SECTION
 ════════════════════════════════════════════ -->
-<main id="main-content">
-<section class="hero" aria-labelledby="hero-heading">
-  <!-- Background orbs -->
-  <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
+  <main id="main-content">
+    <section class="hero" aria-labelledby="hero-heading">
+      <!-- Wireframe Grid Background & Ambient Cosmic Glows -->
+      <div class="tech-grid-bg"></div>
+      <div class="ambient-glow ambient-purple" style="top: -10%; left: -10%; width: 500px; height: 500px;"></div>
+      <div class="ambient-glow ambient-pink" style="bottom: -10%; right: -10%; width: 450px; height: 450px;"></div>
+      <div class="ambient-glow ambient-cyan" style="top: 30%; left: 30%; width: 400px; height: 400px;"></div>
 
-  <!-- Floating UI Cards -->
-  <div class="hero-float-cards" aria-hidden="true">
-    <div class="float-card float-card-1">
-      <i class="fas fa-users"></i>
-      <div><div style="font-size:1rem;font-weight:800;">2.4M+</div><div style="opacity:.7;font-size:10px;">Active Users</div></div>
-    </div>
-    <div class="float-card float-card-2">
-      <i class="fas fa-heart" style="color:#ec4899;"></i>
-      <div><div style="font-size:.85rem;">Alex liked your post ❤️</div></div>
-    </div>
-    <div class="float-card float-card-3">
-      <i class="fas fa-calendar-check" style="color:#10b981;"></i>
-      <div><div style="font-size:.85rem;">Tech Summit · Tomorrow</div></div>
-    </div>
-    <div class="float-card float-card-4">
-      <i class="fas fa-trophy" style="color:#f59e0b;"></i>
-      <div><div style="font-size:.85rem;">Talent #1 This Week 🏆</div></div>
-    </div>
+      <!-- Hero Content -->
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fas fa-bolt"></i>
+          The Next-Gen Social Platform is Here
+        </div>
+
+        <h1 class="hero-title" id="hero-heading">
+          Where Creators &<br>
+          Professionals <span class="accent">Intersect.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          ConnectX combines professional networking, social feeds, live events, and talent showcases into one stunning
+          platform built for the modern creator.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="signup.html" class="btn-hero-primary" aria-label="Create your free ConnectX account">
+            <i class="fas fa-rocket"></i> Start for Free
+          </a>
+          <a href="login.html" class="btn-hero-outline" aria-label="Log in to your ConnectX account">
+            <i class="fas fa-play-circle"></i> See It Live
+          </a>
+        </div>
+
+        <!-- Social Proof Stats -->
+        <div class="hero-badges" role="list" aria-label="Platform statistics">
+          <div class="hero-stat" role="listitem">
+            <span class="hero-stat-value">2.4M+</span>
+            <span class="hero-stat-label">Members</span>
+          </div>
+          <div class="hero-stat-sep" aria-hidden="true"></div>
+          <div class="hero-stat" role="listitem">
+            <span class="hero-stat-value">180+</span>
+            <span class="hero-stat-label">Countries</span>
+          </div>
+          <div class="hero-stat-sep" aria-hidden="true"></div>
+          <div class="hero-stat" role="listitem">
+            <span class="hero-stat-value">50K+</span>
+            <span class="hero-stat-label">Events/Month</span>
+          </div>
+          <div class="hero-stat-sep" aria-hidden="true"></div>
+          <div class="hero-stat" role="listitem">
+            <span class="hero-stat-value">4.9★</span>
+            <span class="hero-stat-label">User Rating</span>
+          </div>
+        </div>
+      </div>
+
     
-  </div>
+    </section>
 
-  <!-- Hero Content -->
-  <div class="hero-content">
-    <div class="hero-badge">
-      <i class="fas fa-bolt"></i>
-      The Next-Gen Social Platform is Here
-    </div>
-
-    <h1 class="hero-title" id="hero-heading">
-      Connect. Create.<br>
-      <span class="accent">Grow Together.</span>
-    </h1>
-
-    <p class="hero-subtitle">
-      ConnectX combines professional networking, social feeds, live events, and talent showcases into one stunning platform built for the modern creator.
-    </p>
-
-    <div class="hero-buttons">
-      <a href="signup.html" class="btn-hero-primary" aria-label="Create your free ConnectX account">
-        <i class="fas fa-rocket"></i> Start for Free
-      </a>
-      <a href="login.html" class="btn-hero-outline" aria-label="Log in to your ConnectX account">
-        <i class="fas fa-play-circle"></i> See It Live
-      </a>
-    </div>
-
-    <!-- Social Proof Stats -->
-    <div class="hero-badges" role="list" aria-label="Platform statistics">
-      <div class="hero-stat" role="listitem">
-        <span class="hero-stat-value">2.4M+</span>
-        <span class="hero-stat-label">Members</span>
-      </div>
-      <div class="hero-stat-sep" aria-hidden="true"></div>
-      <div class="hero-stat" role="listitem">
-        <span class="hero-stat-value">180+</span>
-        <span class="hero-stat-label">Countries</span>
-      </div>
-      <div class="hero-stat-sep" aria-hidden="true"></div>
-      <div class="hero-stat" role="listitem">
-        <span class="hero-stat-value">50K+</span>
-        <span class="hero-stat-label">Events/Month</span>
-      </div>
-      <div class="hero-stat-sep" aria-hidden="true"></div>
-      <div class="hero-stat" role="listitem">
-        <span class="hero-stat-value">4.9★</span>
-        <span class="hero-stat-label">User Rating</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scroll indicator -->
-  <div class="scroll-indicator" aria-hidden="true">
-    <span style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;">Scroll</span>
-    <i class="fas fa-chevron-down"></i>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════
+    <!-- ════════════════════════════════════════════
      FEATURES SECTION
 ════════════════════════════════════════════ -->
-<section class="features-section" id="features" aria-labelledby="features-heading">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-tag"><i class="fas fa-sparkles"></i> Everything You Need</div>
-      <h2 id="features-heading">One Platform. Infinite Possibilities.</h2>
-      <p>From sharing your story to landing your next opportunity — ConnectX has every tool you need to build your presence online.</p>
-    </div>
-
-    <div class="features-grid">
-      <!-- Feature 1 -->
-      <div class="feature-card" tabindex="0" aria-label="Social Feed feature">
-        <div class="feature-icon"><i class="fas fa-rss"></i></div>
-        <h3 class="feature-title">Smart Social Feed</h3>
-        <p class="feature-desc">An Instagram-style feed powered by smart algorithms that surface content you actually care about.</p>
-        <ul class="feature-list" aria-label="Feature highlights">
-          <li class="feature-list-item"><i class="fas fa-check"></i> Stories & reels</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Like, comment, share</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Trending hashtags</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Save for later</li>
-        </ul>
-      </div>
-
-      <!-- Feature 2 -->
-      <div class="feature-card" tabindex="0" aria-label="Professional Networking feature">
-        <div class="feature-icon" style="background:rgba(139,92,246,0.10);color:var(--color-secondary);">
-          <i class="fas fa-network-wired"></i>
+    <section class="features-section" id="features" aria-labelledby="features-heading">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag"><i class="fas fa-sparkles"></i> Everything You Need</div>
+          <h2 id="features-heading">One Platform. Infinite Possibilities.</h2>
+          <p>From sharing your story to landing your next opportunity — ConnectX has every tool you need to build your
+            presence online.</p>
         </div>
-        <h3 class="feature-title">Pro Networking</h3>
-        <p class="feature-desc">LinkedIn-style professional profiles, connection building, and opportunity discovery.</p>
-        <ul class="feature-list" aria-label="Feature highlights">
-          <li class="feature-list-item"><i class="fas fa-check"></i> Skill endorsements</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Portfolio showcase</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Job opportunities</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Recommendations</li>
-        </ul>
-      </div>
 
-      <!-- Feature 3 -->
-      <div class="feature-card" tabindex="0" aria-label="Live Events feature">
-        <div class="feature-icon" style="background:rgba(6,182,212,0.10);color:var(--color-accent);">
-          <i class="fas fa-calendar-star"></i>
-        </div>
-        <h3 class="feature-title">Live Events Hub</h3>
-        <p class="feature-desc">Discover, register, and attend the best tech, design, and business events worldwide.</p>
-        <ul class="feature-list" aria-label="Feature highlights">
-          <li class="feature-list-item"><i class="fas fa-check"></i> Online & in-person</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Live countdowns</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Speaker profiles</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> One-click register</li>
-        </ul>
-      </div>
+        <div class="features-grid">
+          <!-- Feature 1 -->
+          <div class="feature-card" tabindex="0" aria-label="Social Feed feature">
+            <div class="feature-icon"><i class="fas fa-rss"></i></div>
+            <h3 class="feature-title">Smart Social Feed</h3>
+            <p class="feature-desc">An Instagram-style feed powered by smart algorithms that surface content you
+              actually care about.</p>
+            <ul class="feature-list" aria-label="Feature highlights">
+              <li class="feature-list-item"><i class="fas fa-check"></i> Stories & reels</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Like, comment, share</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Trending hashtags</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Save for later</li>
+            </ul>
+          </div>
 
-      <!-- Feature 4 -->
-      <div class="feature-card" tabindex="0" aria-label="Messaging feature">
-        <div class="feature-icon" style="background:rgba(236,72,153,0.10);color:#ec4899;">
-          <i class="fas fa-comments"></i>
-        </div>
-        <h3 class="feature-title">Real-Time Messaging</h3>
-        <p class="feature-desc">End-to-end encrypted chats with media sharing, voice notes, and group conversations.</p>
-        <ul class="feature-list" aria-label="Feature highlights">
-          <li class="feature-list-item"><i class="fas fa-check"></i> Typing indicators</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Read receipts</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> File & media sharing</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Video & voice calls</li>
-        </ul>
-      </div>
+          <!-- Feature 2 -->
+          <div class="feature-card" tabindex="0" aria-label="Professional Networking feature">
+            <div class="feature-icon" style="background:rgba(139,92,246,0.10);color:var(--color-secondary);">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <h3 class="feature-title">Pro Networking</h3>
+            <p class="feature-desc">LinkedIn-style professional profiles, connection building, and opportunity
+              discovery.</p>
+            <ul class="feature-list" aria-label="Feature highlights">
+              <li class="feature-list-item"><i class="fas fa-check"></i> Skill endorsements</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Portfolio showcase</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Job opportunities</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Recommendations</li>
+            </ul>
+          </div>
 
-      <!-- Feature 5 -->
-      <div class="feature-card" tabindex="0" aria-label="Talent Showcase feature">
-        <div class="feature-icon" style="background:rgba(245,158,11,0.10);color:#f59e0b;">
-          <i class="fas fa-star"></i>
-        </div>
-        <h3 class="feature-title">Talent Showcase</h3>
-        <p class="feature-desc">A dedicated gallery to display your best projects, designs, code, and creative work.</p>
-        <ul class="feature-list" aria-label="Feature highlights">
-          <li class="feature-list-item"><i class="fas fa-check"></i> Portfolio gallery</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Skill tags</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Live demo links</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> GitHub integration</li>
-        </ul>
-      </div>
+          <!-- Feature 3 -->
+          <div class="feature-card" tabindex="0" aria-label="Live Events feature">
+            <div class="feature-icon" style="background:rgba(6,182,212,0.10);color:var(--color-accent);">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <h3 class="feature-title">Live Events Hub</h3>
+            <p class="feature-desc">Discover, register, and attend the best tech, design, and business events worldwide.
+            </p>
+            <ul class="feature-list" aria-label="Feature highlights">
+              <li class="feature-list-item"><i class="fas fa-check"></i> Online & in-person</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Live countdowns</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Speaker profiles</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> One-click register</li>
+            </ul>
+          </div>
 
-      <!-- Feature 6 -->
-      <div class="feature-card" tabindex="0" aria-label="Dark Mode and Accessibility feature">
-        <div class="feature-icon" style="background:rgba(16,185,129,0.10);color:#10b981;">
-          <i class="fas fa-universal-access"></i>
-        </div>
-        <h3 class="feature-title">Accessible by Design</h3>
-        <p class="feature-desc">Built with WCAG accessibility standards, dark mode, and keyboard navigation from the ground up.</p>
-        <ul class="feature-list" aria-label="Feature highlights">
-          <li class="feature-list-item"><i class="fas fa-check"></i> Dark / light mode</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Screen reader support</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> Keyboard navigation</li>
-          <li class="feature-list-item"><i class="fas fa-check"></i> WCAG AA compliant</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+          <!-- Feature 4 -->
+          <div class="feature-card" tabindex="0" aria-label="Messaging feature">
+            <div class="feature-icon" style="background:rgba(236,72,153,0.10);color:#ec4899;">
+              <i class="fas fa-comments"></i>
+            </div>
+            <h3 class="feature-title">Real-Time Messaging</h3>
+            <p class="feature-desc">End-to-end encrypted chats with media sharing, voice notes, and group conversations.
+            </p>
+            <ul class="feature-list" aria-label="Feature highlights">
+              <li class="feature-list-item"><i class="fas fa-check"></i> Typing indicators</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Read receipts</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> File & media sharing</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Video & voice calls</li>
+            </ul>
+          </div>
 
-<!-- ════════════════════════════════════════════
-     TESTIMONIALS
-════════════════════════════════════════════ -->
-<section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-heading">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-tag"><i class="fas fa-heart"></i> Loved by Thousands</div>
-      <h2 id="testimonials-heading">What Our Community Says</h2>
-      <p>Real stories from real professionals who've transformed their careers on ConnectX.</p>
-    </div>
+          <!-- Feature 5 -->
+          <div class="feature-card" tabindex="0" aria-label="Talent Showcase feature">
+            <div class="feature-icon" style="background:rgba(245,158,11,0.10);color:#f59e0b;">
+              <i class="fas fa-star"></i>
+            </div>
+            <h3 class="feature-title">Talent Showcase</h3>
+            <p class="feature-desc">A dedicated gallery to display your best projects, designs, code, and creative work.
+            </p>
+            <ul class="feature-list" aria-label="Feature highlights">
+              <li class="feature-list-item"><i class="fas fa-check"></i> Portfolio gallery</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Skill tags</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Live demo links</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> GitHub integration</li>
+            </ul>
+          </div>
 
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <div class="testimonial-quote-icon" aria-hidden="true">"</div>
-        <p class="testimonial-text">"ConnectX completely changed how I network professionally. The seamless blend of social and professional features is unmatched. I landed my dream job through connections here!"</p>
-        <div class="testimonial-user">
-          <img src="images/user1.jpg" alt="Sarah Johnson" class="avatar avatar-md">
-          <div>
-            <div class="testimonial-name">Sarah Johnson</div>
-            <div class="testimonial-role">Senior UX Designer · Google</div>
+          <!-- Feature 6 -->
+          <div class="feature-card" tabindex="0" aria-label="Dark Mode and Accessibility feature">
+            <div class="feature-icon" style="background:rgba(16,185,129,0.10);color:#10b981;">
+              <i class="fas fa-universal-access"></i>
+            </div>
+            <h3 class="feature-title">Accessible by Design</h3>
+            <p class="feature-desc">Built with WCAG accessibility standards, dark mode, and keyboard navigation from the
+              ground up.</p>
+            <ul class="feature-list" aria-label="Feature highlights">
+              <li class="feature-list-item"><i class="fas fa-check"></i> Dark / light mode</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Screen reader support</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> Keyboard navigation</li>
+              <li class="feature-list-item"><i class="fas fa-check"></i> WCAG AA compliant</li>
+            </ul>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="testimonial-card">
-        <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <div class="testimonial-quote-icon" aria-hidden="true">"</div>
-        <p class="testimonial-text">"The Events Hub is phenomenal! I've attended 12 online conferences this year through ConnectX. The countdown timers and easy registration make it so smooth."</p>
-        <div class="testimonial-user">
-          <img src="images/user2.jpg" alt="Marcus Chen" class="avatar avatar-md">
-          <div>
-            <div class="testimonial-name">Marcus Chen</div>
-            <div class="testimonial-role">Full Stack Dev · Startup Founder</div>
-          </div>
-        </div>
-      </div>
 
-      <div class="testimonial-card">
-        <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <div class="testimonial-quote-icon" aria-hidden="true">"</div>
-        <p class="testimonial-text">"The Talent Showcase feature helped me display my portfolio to 50,000+ professionals. Within a month, I had 3 freelance offers. This platform is a game-changer!"</p>
-        <div class="testimonial-user">
-          <img src="images/user3.jpg" alt="Priya Patel" class="avatar avatar-md">
-          <div>
-            <div class="testimonial-name">Priya Patel</div>
-            <div class="testimonial-role">AI Researcher · MIT</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ════════════════════════════════════════════
+    <!-- ════════════════════════════════════════════
      CTA SECTION
 ════════════════════════════════════════════ -->
-<section class="cta-section" aria-labelledby="cta-heading">
-  <div class="cta-content">
-    <h2 id="cta-heading">Ready to Join the Future<br>of Social Networking?</h2>
-    <p>Over 2.4 million professionals are already growing their network on ConnectX. Your community is waiting.</p>
-    <div class="hero-buttons">
-      <a href="signup.html" class="btn-hero-primary" aria-label="Create your free account">
-        <i class="fas fa-rocket"></i> Create Free Account
-      </a>
-      <a href="login.html" class="btn-hero-outline" aria-label="Log in to your account">
-        <i class="fas fa-sign-in-alt"></i> Sign In
-      </a>
-    </div>
-    <p style="color:rgba(255,255,255,0.50);font-size:var(--fs-xs);margin-top:var(--space-md);">
-      No credit card required · Free forever plan · Cancel anytime
-    </p>
-  </div>
-</section>
+    <section class="cta-section" aria-labelledby="cta-heading">
+      <div class="cta-content">
+        <h2 id="cta-heading">Ready to Join the Future<br>of Social Networking?</h2>
+        <p>Over 2.4 million professionals are already growing their network on ConnectX. Your community is waiting.</p>
+        <div class="hero-buttons">
+          <a href="signup.html" class="btn-hero-primary" aria-label="Create your free account">
+            <i class="fas fa-rocket"></i> Create Free Account
+          </a>
+          <a href="login.html" class="btn-hero-outline" aria-label="Log in to your account">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </a>
+        </div>
+        <p style="color:rgba(255,255,255,0.50);font-size:var(--fs-xs);margin-top:var(--space-md);">
+          No credit card required · Free forever plan · Cancel anytime
+        </p>
+      </div>
+    </section>
 
-<!-- ════════════════════════════════════════════
+    <!-- ════════════════════════════════════════════
      FOOTER
 ════════════════════════════════════════════ -->
-<footer class="landing-footer" aria-label="Site footer">
-  <div class="container">
-    <div class="landing-footer-grid">
-      <div class="landing-footer-brand">
-        <div class="footer-brand-name">ConnectX</div>
-        <p class="footer-brand-desc">The premium social platform connecting professionals, creators, and communities worldwide.</p>
-        <div class="footer-socials" aria-label="Social media links">
-          <a href="#" class="footer-social-btn" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="footer-social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" class="footer-social-btn" aria-label="GitHub"><i class="fab fa-github"></i></a>
-          <a href="#" class="footer-social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <footer class="landing-footer" aria-label="Site footer">
+      <div class="container">
+        <div class="landing-footer-grid">
+          <div class="landing-footer-brand">
+            <div class="footer-brand-name">ConnectX</div>
+            <p class="footer-brand-desc">The premium social platform connecting professionals, creators, and communities
+              worldwide.</p>
+            <div class="footer-socials" aria-label="Social media links">
+              <a href="#" class="footer-social-btn" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="footer-social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="footer-social-btn" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a href="#" class="footer-social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <div class="footer-links">
+              <a href="#" class="footer-link">Social Feed</a>
+              <a href="#" class="footer-link">Events Hub</a>
+              <a href="#" class="footer-link">Talent Showcase</a>
+              <a href="#" class="footer-link">Messages</a>
+              <a href="#" class="footer-link">Notifications</a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Company</h4>
+            <div class="footer-links">
+              <a href="#" class="footer-link">About Us</a>
+              <a href="#" class="footer-link">Careers</a>
+              <a href="#" class="footer-link">Blog</a>
+              <a href="#" class="footer-link">Press Kit</a>
+              <a href="#" class="footer-link">Contact</a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <div class="footer-links">
+              <a href="#" class="footer-link">Privacy Policy</a>
+              <a href="#" class="footer-link">Terms of Service</a>
+              <a href="#" class="footer-link">Cookie Policy</a>
+              <a href="#" class="footer-link">Accessibility</a>
+              <a href="#" class="footer-link">Security</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 ConnectX. All rights reserved.</span>
+          <span>Made with <i class="fas fa-heart" style="color:#ec4899;"></i> for the community</span>
         </div>
       </div>
+    </footer>
+  </main>
 
-      <div class="footer-col">
-        <h4>Platform</h4>
-        <div class="footer-links">
-          <a href="#" class="footer-link">Social Feed</a>
-          <a href="#" class="footer-link">Events Hub</a>
-          <a href="#" class="footer-link">Talent Showcase</a>
-          <a href="#" class="footer-link">Messages</a>
-          <a href="#" class="footer-link">Notifications</a>
-        </div>
-      </div>
-
-      <div class="footer-col">
-        <h4>Company</h4>
-        <div class="footer-links">
-          <a href="#" class="footer-link">About Us</a>
-          <a href="#" class="footer-link">Careers</a>
-          <a href="#" class="footer-link">Blog</a>
-          <a href="#" class="footer-link">Press Kit</a>
-          <a href="#" class="footer-link">Contact</a>
-        </div>
-      </div>
-
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <div class="footer-links">
-          <a href="#" class="footer-link">Privacy Policy</a>
-          <a href="#" class="footer-link">Terms of Service</a>
-          <a href="#" class="footer-link">Cookie Policy</a>
-          <a href="#" class="footer-link">Accessibility</a>
-          <a href="#" class="footer-link">Security</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <span>© 2026 ConnectX. All rights reserved.</span>
-      <span>Made with <i class="fas fa-heart" style="color:#ec4899;"></i> for the community</span>
-    </div>
-  </div>
-</footer>
-</main>
-
-<!-- JS -->
-<script src="js/darkmode.js"></script>
-<script src="js/app.js"></script>
-<script>
-  // Navbar scroll effect
-  const nav = document.getElementById('landing-nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-  });
-
-  // Smooth scroll for nav links
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  <!-- JS -->
+  <script src="js/app.js"></script>
+  <script>
+    // Navbar scroll effect
+    const nav = document.getElementById('landing-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
     });
-  });
 
-  // Mobile menu
-  const mobileBtn = document.getElementById('mobile-menu-btn');
-  const navLinks  = document.getElementById('nav-links');
-  mobileBtn?.addEventListener('click', () => {
-    const open = navLinks.classList.toggle('mobile-open');
-    mobileBtn.setAttribute('aria-expanded', open);
-    mobileBtn.querySelector('i').className = open ? 'fas fa-times' : 'fas fa-bars';
-  });
-</script>
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    // Interactive Ambient Spotlight Cursor Follower with Spring Inertia
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let targetX = mouseX;
+      let targetY = mouseY;
+      const speed = 0.08; // smooth spring lag factor
+
+      // Initial center position
+      heroSection.style.setProperty('--mouse-x', '50%');
+      heroSection.style.setProperty('--mouse-y', '50%');
+
+      heroSection.addEventListener('mousemove', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        targetX = e.clientX - rect.left;
+        targetY = e.clientY - rect.top;
+      });
+
+      function updateSpotlight() {
+        mouseX += (targetX - mouseX) * speed;
+        mouseY += (targetY - mouseY) * speed;
+        heroSection.style.setProperty('--mouse-x', `${mouseX}px`);
+        heroSection.style.setProperty('--mouse-y', `${mouseY}px`);
+        requestAnimationFrame(updateSpotlight);
+      }
+      requestAnimationFrame(updateSpotlight);
+    }
+
+    // Auto scroll after 10 seconds of inactivity at the top
+    setTimeout(() => {
+      if (window.scrollY < 50) {
+        const target = document.getElementById('features');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }, 10000);
+
+    // Loading Screen Handler
+    const loadingScreen = document.getElementById('loading-screen');
+    
+    // Hide loading screen when page is fully loaded
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+      }, 500); // Small delay for smooth transition
+    });
+
+    // Also hide after a maximum of 5 seconds (backup)
+    setTimeout(() => {
+      loadingScreen.classList.add('hidden');
+    }, 5000);
+  </script>
 </body>
+
 </html>

@@ -25,9 +25,9 @@
 
 /* ── Top Header ── */
 .dashboard-header {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-sticky);
+  position: sticky !important;
+  top: 0 !important;
+  z-index: var(--z-sticky) !important;
   height: var(--header-height);
   background: var(--surface-card);
   border-bottom: 1px solid var(--border-color);

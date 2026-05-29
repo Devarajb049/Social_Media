@@ -199,7 +199,7 @@ const Auth = {
         handle: '@' + name.toLowerCase().replace(/\s+/g, ''),
         avatar: 'images/user1.jpg',
         role: 'New Member',
-        bio: 'Excited to be part of the Gradix community!',
+        bio: 'Excited to be part of the ConnectX community!',
         followers: 0,
         following: 0,
         posts: 0,

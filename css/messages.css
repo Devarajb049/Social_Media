@@ -366,6 +366,7 @@
   align-items: flex-end;
   gap: var(--space-sm);
   flex-shrink: 0;
+  width: 100% !important;
 }
 
 .chat-input-box {
@@ -455,7 +456,7 @@
 }
 
 .chat-empty i {
-  font-size: 4rem;
+  font-size: 48px !important;
   margin-bottom: var(--space-lg);
   opacity: 0.30;
   background: var(--gradient-main);

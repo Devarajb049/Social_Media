@@ -1,201 +1,394 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Create your free Gradix account and join 2.4 million professionals.">
-  <title>Sign Up — Gradix</title>
+  <meta name="description" content="Create your free ConnectX account and join 2.4 million professionals.">
+  <title>Sign Up — ConnectX</title>
   <link rel="icon" type="image/png" href="images/logo.png">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/auth.css">
-  <link rel="stylesheet" href="css/darkmode.css">
   <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    /* ── Loading Screen ── */
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+
+    .loading-logo {
+      width: 120px;
+      height: 120px;
+    }
+
+    .loading-logo svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.6));
+    }
+
+    .loading-text {
+      font-family: var(--font-heading);
+      font-size: var(--fs-xl);
+      font-weight: var(--fw-extrabold);
+      background: var(--gradient-main);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.01em;
+    }
+
+    .loading-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: var(--space-md);
+    }
+
+    .loading-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-primary);
+    }
+
+    @keyframes spin-pulse {
+      0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: rotate(180deg) scale(1.1);
+      }
+      100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounce-loading {
+      0%, 80%, 100% {
+        transform: scale(0) translateY(0);
+        opacity: 0.5;
+      }
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
+
 <body class="auth-page">
-
-<!-- Skip Link -->
-<a href="#signup-form" class="skip-link">Skip to signup form</a>
-
-<!-- ════════ LEFT PANEL ════════ -->
-<aside class="auth-left" aria-label="Brand information">
-  <div class="auth-orb auth-orb-1" aria-hidden="true"></div>
-  <div class="auth-orb auth-orb-2" aria-hidden="true"></div>
-  <div class="auth-orb auth-orb-3" aria-hidden="true"></div>
-
-  <div class="auth-brand">
-    <div class="auth-brand-logo" aria-hidden="true">
-      <img src="images/logo.png" alt="Gradix" style="width:50px;height:50px;border-radius:10px;object-fit:cover;">
-    </div>
-
-    <h1>Join the <span style="background:linear-gradient(135deg,#818cf8,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Gradix</span><br>Community</h1>
-    <p>Start your journey with 2.4 million professionals and creatives. It's completely free.</p>
-
-    <!-- Stats -->
-    <div class="auth-features" role="list" aria-label="Why join Gradix">
-      <div class="auth-feature-item" role="listitem">
-        <i class="fas fa-users" aria-hidden="true"></i>
-        <span><strong>2.4M+</strong> active professionals worldwide</span>
-      </div>
-      <div class="auth-feature-item" role="listitem">
-        <i class="fas fa-globe" aria-hidden="true"></i>
-        <span><strong>180+</strong> countries represented</span>
-      </div>
-      <div class="auth-feature-item" role="listitem">
-        <i class="fas fa-briefcase" aria-hidden="true"></i>
-        <span><strong>50K+</strong> opportunities posted monthly</span>
-      </div>
-      <div class="auth-feature-item" role="listitem">
-        <i class="fas fa-shield-halved" aria-hidden="true"></i>
-        <span>Privacy-first · End-to-end encrypted</span>
-      </div>
-    </div>
-  </div>
-</aside>
-
-<!-- ════════ RIGHT PANEL — SIGNUP FORM ════════ -->
-<main class="auth-right" id="signup-form" aria-labelledby="signup-heading">
-  <!-- Theme toggle -->
-  <button class="theme-toggle-icon" data-theme-toggle
-          style="position:absolute;top:var(--space-lg);right:var(--space-lg);"
-          aria-label="Toggle dark mode">
-    <i class="fas fa-sun sun-icon theme-icon"></i>
-    <i class="fas fa-moon moon-icon"></i>
-  </button>
-
-  <div class="auth-form-container">
-    <div class="auth-form-header">
-      <h2 id="signup-heading">Create Account</h2>
-      <p>Join millions of professionals on Gradix — free forever</p>
-    </div>
-
-    <!-- Social Signup -->
-    <div class="social-login" role="group" aria-label="Social signup options">
-      <button class="btn-social" type="button" aria-label="Sign up with Google">
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="loadingLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366f1" />
+              <stop offset="50%" stop-color="#8b5cf6" />
+              <stop offset="100%" stop-color="#06b6d4" />
+            </linearGradient>
+          </defs>
+          <line x1="25" y1="50" x2="75" y2="50" stroke="url(#loadingLogoGrad)" stroke-width="8" stroke-dasharray="2 2" stroke-linecap="round" />
+          <path d="M25 50 L50 25 L75 50 L50 75 Z" fill="none" stroke="url(#loadingLogoGrad)" stroke-width="6" stroke-linejoin="round" />
+          <circle cx="25" cy="50" r="10" fill="url(#loadingLogoGrad)" />
+          <circle cx="75" cy="50" r="10" fill="url(#loadingLogoGrad)" />
+          <circle cx="50" cy="25" r="7" fill="#ec4899" />
+          <circle cx="50" cy="75" r="7" fill="#06b6d4" />
+          <text x="50" y="56" font-family="'Poppins', sans-serif" font-weight="900" font-size="18" fill="#fff" text-anchor="middle">X</text>
         </svg>
-        Google
-      </button>
-      <button class="btn-social" type="button" aria-label="Sign up with GitHub">
-        <i class="fab fa-github" aria-hidden="true"></i>
-        GitHub
-      </button>
-    </div>
-
-    <div class="auth-divider" aria-hidden="true">or sign up with email</div>
-
-    <!-- Signup Form -->
-    <form id="signup-form" novalidate aria-label="Registration form">
-
-      <!-- Full Name -->
-      <div class="form-group">
-        <div class="form-field">
-          <input type="text" id="signup-name" name="name"
-                 placeholder="Full name" autocomplete="name"
-                 required aria-required="true" aria-describedby="name-error">
-          <label for="signup-name">Full name</label>
-        </div>
-        <div class="form-error" id="name-error" role="alert" aria-live="polite">
-          <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-          <span></span>
-        </div>
       </div>
-
-      <!-- Email -->
-      <div class="form-group">
-        <div class="form-field">
-          <input type="email" id="signup-email" name="email"
-                 placeholder="Email address" autocomplete="email"
-                 required aria-required="true" aria-describedby="email-error-s">
-          <label for="signup-email">Email address</label>
-        </div>
-        <div class="form-error" id="email-error-s" role="alert" aria-live="polite">
-          <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-          <span></span>
-        </div>
+      <div class="loading-text">ConnectX</div>
+      <div class="loading-dots">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
       </div>
-
-      <!-- Password -->
-      <div class="form-group">
-        <div class="form-field">
-          <input type="password" id="signup-password" name="password"
-                 placeholder="Create password" autocomplete="new-password"
-                 required aria-required="true" aria-describedby="password-error-s password-strength-desc">
-          <label for="signup-password">Create password</label>
-          <button type="button" class="password-toggle fas fa-eye-slash"
-                  id="toggle-signup-pw" aria-label="Toggle password visibility"></button>
-        </div>
-        <!-- Password strength indicator -->
-        <div class="password-strength" role="status" aria-live="polite" id="password-strength-desc">
-          <div class="strength-bar" aria-hidden="true"></div>
-          <div class="strength-bar" aria-hidden="true"></div>
-          <div class="strength-bar" aria-hidden="true"></div>
-          <div class="strength-bar" aria-hidden="true"></div>
-          <span class="strength-label"></span>
-        </div>
-        <div class="form-error" id="password-error-s" role="alert" aria-live="polite">
-          <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-          <span></span>
-        </div>
-      </div>
-
-      <!-- Confirm Password -->
-      <div class="form-group">
-        <div class="form-field">
-          <input type="password" id="signup-confirm" name="confirm"
-                 placeholder="Confirm password" autocomplete="new-password"
-                 required aria-required="true" aria-describedby="confirm-error">
-          <label for="signup-confirm">Confirm password</label>
-        </div>
-        <div class="form-error" id="confirm-error" role="alert" aria-live="polite">
-          <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-          <span></span>
-        </div>
-      </div>
-
-      <!-- Terms checkbox -->
-      <div class="form-group">
-        <label class="checkbox-label" style="align-items:flex-start;gap:var(--space-sm);">
-          <input type="checkbox" id="terms-check" name="terms" required
-                 style="margin-top:3px;" aria-required="true">
-          <span style="font-size:var(--fs-xs);color:var(--text-secondary);line-height:1.6;">
-            I agree to the <a href="#" style="color:var(--color-primary);font-weight:600;">Terms of Service</a>
-            and <a href="#" style="color:var(--color-primary);font-weight:600;">Privacy Policy</a>.
-            Gradix will never sell your data.
-          </span>
-        </label>
-      </div>
-
-      <!-- Submit -->
-      <button type="submit" class="btn-auth" id="signup-btn" aria-label="Create your Gradix account">
-        <span class="btn-text"><i class="fas fa-rocket" aria-hidden="true"></i> Create Account</span>
-        <div class="btn-loader" role="status" aria-label="Creating account..."></div>
-      </button>
-    </form>
-
-    <!-- Switch to login -->
-    <div class="auth-switch">
-      Already have an account? <a href="login.html" aria-label="Log in to your existing account">Sign in →</a>
     </div>
   </div>
-</main>
 
-<!-- JS -->
-<script src="js/darkmode.js"></script>
-<script src="js/app.js"></script>
-<script src="js/auth.js"></script>
+  <div class="tech-grid-bg" aria-hidden="true"></div>
+
+  <!-- Skip Link -->
+  <a href="#signup-form" class="skip-link">Skip to signup form</a>
+
+  <!-- ════════ LEFT PANEL ════════ -->
+  <aside class="auth-left" aria-label="Brand information">
+    <div class="auth-orb auth-orb-1" aria-hidden="true"></div>
+    <div class="auth-orb auth-orb-2" aria-hidden="true"></div>
+    <div class="auth-orb auth-orb-3" aria-hidden="true"></div>
+
+    <div class="auth-brand">
+      <div class="auth-brand-logo" aria-hidden="true" style="margin-bottom:var(--space-md);">
+        <svg class="connectx-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"
+          style="width:60px;height:60px;">
+          <defs>
+            <linearGradient id="logoGradAuthS" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366f1" />
+              <stop offset="50%" stop-color="#8b5cf6" />
+              <stop offset="100%" stop-color="#06b6d4" />
+            </linearGradient>
+          </defs>
+          <line x1="25" y1="50" x2="75" y2="50" stroke="url(#logoGradAuthS)" stroke-width="8" stroke-dasharray="2 2"
+            stroke-linecap="round" />
+          <path d="M25 50 L50 25 L75 50 L50 75 Z" fill="none" stroke="url(#logoGradAuthS)" stroke-width="6"
+            stroke-linejoin="round" />
+          <circle cx="25" cy="50" r="10" fill="url(#logoGradAuthS)" />
+          <circle cx="75" cy="50" r="10" fill="url(#logoGradAuthS)" />
+          <circle cx="50" cy="25" r="7" fill="#ec4899" />
+          <circle cx="50" cy="75" r="7" fill="#06b6d4" />
+          <text x="50" y="56" font-family="'Poppins', sans-serif" font-weight="900" font-size="18" fill="#fff"
+            text-anchor="middle">X</text>
+        </svg>
+      </div>
+
+      <h1>Join the <span
+          style="background:linear-gradient(135deg,#818cf8,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ConnectX</span><br>Community
+      </h1>
+      <p>Start your journey with 2.4 million professionals and creatives. It's completely free.</p>
+
+      <!-- Stats -->
+      <div class="auth-features" role="list" aria-label="Why join ConnectX">
+        <div class="auth-feature-item" role="listitem">
+          <i class="fas fa-users" aria-hidden="true"></i>
+          <span><strong>2.4M+</strong> active professionals worldwide</span>
+        </div>
+        <div class="auth-feature-item" role="listitem">
+          <i class="fas fa-globe" aria-hidden="true"></i>
+          <span><strong>180+</strong> countries represented</span>
+        </div>
+        <div class="auth-feature-item" role="listitem">
+          <i class="fas fa-briefcase" aria-hidden="true"></i>
+          <span><strong>50K+</strong> opportunities posted monthly</span>
+        </div>
+        <div class="auth-feature-item" role="listitem">
+          <i class="fas fa-shield-halved" aria-hidden="true"></i>
+          <span>Privacy-first · End-to-end encrypted</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ════════ RIGHT PANEL — SIGNUP FORM ════════ -->
+  <main class="auth-right" id="signup-form" aria-labelledby="signup-heading">
+
+    <div class="auth-form-container">
+      <div class="auth-form-header">
+        <h2 id="signup-heading">Sign In</h2>
+        <p>Enter your credentials to access your account</p>
+      </div>
+
+      <!-- Social Signup -->
+      <div class="social-login" role="group" aria-label="Social signup options">
+        <button class="btn-social" type="button" aria-label="Sign up with Google">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+            <path fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+          Google
+        </button>
+        <button class="btn-social" type="button" aria-label="Sign up with GitHub">
+          <i class="fab fa-github" aria-hidden="true"></i>
+          GitHub
+        </button>
+      </div>
+
+      <div class="auth-divider" aria-hidden="true">or sign up with email</div>
+
+      <!-- Signup Form -->
+      <form id="signup-form" novalidate aria-label="Registration form">
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <div class="form-field">
+            <input type="text" id="signup-name" name="name" placeholder="Full name" autocomplete="name" required
+              aria-required="true" aria-describedby="name-error">
+            <label for="signup-name">Full name</label>
+          </div>
+          <div class="form-error" id="name-error" role="alert" aria-live="polite">
+            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <div class="form-field">
+            <input type="email" id="signup-email" name="email" placeholder="Email address" autocomplete="email" required
+              aria-required="true" aria-describedby="email-error-s">
+            <label for="signup-email">Email address</label>
+          </div>
+          <div class="form-error" id="email-error-s" role="alert" aria-live="polite">
+            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <div class="form-field">
+            <input type="password" id="signup-password" name="password" placeholder="Create password"
+              autocomplete="new-password" required aria-required="true"
+              aria-describedby="password-error-s password-strength-desc">
+            <label for="signup-password">Create password</label>
+            <button type="button" class="password-toggle fas fa-eye-slash" id="toggle-signup-pw"
+              aria-label="Toggle password visibility"></button>
+          </div>
+          <!-- Password strength indicator -->
+          <div class="password-strength" role="status" aria-live="polite" id="password-strength-desc">
+            <div class="strength-bar" aria-hidden="true"></div>
+            <div class="strength-bar" aria-hidden="true"></div>
+            <div class="strength-bar" aria-hidden="true"></div>
+            <div class="strength-bar" aria-hidden="true"></div>
+            <span class="strength-label"></span>
+          </div>
+          <div class="form-error" id="password-error-s" role="alert" aria-live="polite">
+            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <div class="form-field">
+            <input type="password" id="signup-confirm" name="confirm" placeholder="Confirm password"
+              autocomplete="new-password" required aria-required="true" aria-describedby="confirm-error">
+            <label for="signup-confirm">Confirm password</label>
+          </div>
+          <div class="form-error" id="confirm-error" role="alert" aria-live="polite">
+            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- Terms checkbox -->
+        <div class="form-group">
+          <label class="checkbox-label" style="align-items:flex-start;gap:var(--space-sm);">
+            <input type="checkbox" id="terms-check" name="terms" required style="margin-top:3px;" aria-required="true">
+            <span style="font-size:var(--fs-xs);color:var(--text-secondary);line-height:1.6;">
+              I agree to the <a href="#" style="color:var(--color-primary);font-weight:600;">Terms of Service</a>
+              and <a href="#" style="color:var(--color-primary);font-weight:600;">Privacy Policy</a>.
+              ConnectX will never sell your data.
+            </span>
+          </label>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-auth" id="signup-btn" aria-label="Create your ConnectX account">
+          <span class="btn-text"><i class="fas fa-rocket" aria-hidden="true"></i> Create Account</span>
+          <div class="btn-loader" role="status" aria-label="Creating account..."></div>
+        </button>
+      </form>
+
+      <!-- Switch to login -->
+      <div class="auth-switch">
+        Don't have an account? <a href="login.html" aria-label="Create a new ConnectX account">Create one free →</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- JS -->
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Interactive Ambient Spotlight Cursor Follower with Spring Inertia (Active when fields are empty)
+    const inputs = document.querySelectorAll('.form-field input');
+    const body = document.body;
+
+    function hasData() {
+      let filled = false;
+      inputs.forEach(input => {
+        if (input.value.trim() !== '') filled = true;
+      });
+      return filled;
+    }
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let targetX = mouseX;
+    let targetY = mouseY;
+    const speed = 0.08; // smooth spring lag factor
+
+    // Initialize spotlight center position
+    body.style.setProperty('--mouse-x', '50%');
+    body.style.setProperty('--mouse-y', '50%');
+
+    body.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+
+      // Toggle active state
+      if (!hasData()) {
+        body.classList.add('moving-bg');
+      } else {
+        body.classList.remove('moving-bg');
+      }
+    });
+
+    // Re-check on input
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        if (hasData()) {
+          body.classList.remove('moving-bg');
+        } else {
+          body.classList.add('moving-bg');
+        }
+      });
+    });
+
+    function updateSpotlight() {
+      if (!hasData()) {
+        mouseX += (targetX - mouseX) * speed;
+        mouseY += (targetY - mouseY) * speed;
+        body.style.setProperty('--mouse-x', `${mouseX}px`);
+        body.style.setProperty('--mouse-y', `${mouseY}px`);
+      }
+      requestAnimationFrame(updateSpotlight);
+    }
+    requestAnimationFrame(updateSpotlight);
+  </script>
 </body>
+
 </html>

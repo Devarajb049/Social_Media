@@ -27,6 +27,20 @@ const App = {
     // Setup global accessibility
     this.initAccessibility();
 
+    // Preloader fading handler
+    const loader = document.getElementById('loading-screen');
+    if (loader) {
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          loader.classList.add('hidden');
+        }, 400);
+      });
+      // Fallback
+      setTimeout(() => {
+        loader.classList.add('hidden');
+      }, 4000);
+    }
+
     console.log('[App] Initialized');
   },
 
@@ -34,10 +48,9 @@ const App = {
    * Apply theme without transition flash on load
    */
   applyThemeSilently() {
-    const saved = localStorage.getItem('sp-theme') || 'light';
     document.documentElement.classList.add('no-transition');
-    document.documentElement.setAttribute('data-theme', saved);
-    this.theme = saved;
+    document.documentElement.setAttribute('data-theme', 'light');
+    this.theme = 'light';
     // Remove no-transition class after paint
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
