@@ -134,8 +134,10 @@
 
 .event-save-btn:hover,
 .event-save-btn.saved {
-  background: var(--color-accent-pink);
-  border-color: var(--color-accent-pink);
+  background: var(--like);
+  border-color: var(--like);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
 }
 
 /* Date chip on image */
@@ -387,4 +389,13 @@
   border-radius: var(--radius-full);
   font-size: 10px;
   font-weight: var(--fw-bold);
+}
+
+/* ── Custom Heartbeat Keyframe for Empty State ── */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.12); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.12); }
+  70% { transform: scale(1); }
 }

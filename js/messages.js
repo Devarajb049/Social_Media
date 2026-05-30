@@ -12,7 +12,7 @@ const Messages = {
     {
       id: 1,
       name: "Kunal Shah",
-      avatar: "images/user1.jpg",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
       online: true,
       lastMsg:
         "Too late, I already pushed to production... 💀 Just kidding, git merge and enjoy!",
@@ -51,7 +51,7 @@ const Messages = {
     {
       id: 2,
       name: "Sarah Chen",
-      avatar: "images/user2.jpg",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
       online: true,
       lastMsg:
         "Perfect, we will use your branch as the live demo! See you at 2 PM.",
@@ -79,7 +79,7 @@ const Messages = {
     {
       id: 3,
       name: "David Kim",
-      avatar: "images/user3.jpg",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80",
       online: false,
       lastMsg:
         "If you delete it, the notification server crashes. Just leave it as is.",
@@ -107,7 +107,7 @@ const Messages = {
     {
       id: 4,
       name: "Aanya Patel",
-      avatar: "images/user2.jpg",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
       online: false,
       lastMsg: "Thanks for sharing the AST parser script!",
       time: "1d",
@@ -304,7 +304,7 @@ const Messages = {
         <div class="message-bubble-row">
           ${!isMe ? `<img src="${convo.avatar}" alt="${convo.name}" class="avatar avatar-xs msg-avatar">` : ""}
           <div class="message-bubble">${msg.text}</div>
-          ${isMe ? `<img src="${user?.avatar || "images/user1.jpg"}" alt="You" class="avatar avatar-xs msg-avatar">` : ""}
+          ${isMe ? `<img src="${user?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80"}" alt="You" class="avatar avatar-xs msg-avatar">` : ""}
         </div>
         <div class="message-time">
           <span>${msg.time}</span>

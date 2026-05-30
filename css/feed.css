@@ -294,10 +294,18 @@
 }
 
 .post-action-btn.liked {
-  color: #ef4444;
+  color: var(--like);
 }
 
 .post-action-btn.liked i {
+  animation: bounce-in 0.3s ease;
+}
+
+.post-action-btn.saved {
+  color: var(--bookmark);
+}
+
+.post-action-btn.saved i {
   animation: bounce-in 0.3s ease;
 }
 

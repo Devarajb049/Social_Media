@@ -33,7 +33,7 @@ const Feed = {
     this.posts = [
       {
         id: 1,
-        user: { name: 'Kunal Shah', handle: '@kunalshah', avatar: 'images/user1.jpg', role: 'Software Engineering Intern' },
+        user: { name: 'Kunal Shah', handle: '@kunalshah', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', role: 'Software Engineering Intern' },
         content: 'Senior Dev: "Don\'t worry, our codebase is exceptionally clean, fully documented, and highly modular!" 😇\n\nThe codebase:\n* 4,200 lines of spaghetti JavaScript inside a single index.html script tag.\n* Core functions named helper(), helper2(), helper_final_v2().\n* 67 open merge conflicts waiting for my approval.\n* A comment that says: // TODO: DO NOT TOUCH THIS, IT WILL BREAK THE PROD DATABASE, I DON\'T KNOW WHY.\n\nCurrently refactoring this while drinking my 4th cup of double-shot espresso today. ☕️ Send help or dry-run scripts. #internship #javascript #devlife #refactoring #spaghettiCode',
         image: null,
         likes: 312,
@@ -43,16 +43,16 @@ const Feed = {
         liked: false,
         time: new Date(Date.now() - 1*60*60*1000).toISOString(),
         commentsData: [
-          { user: 'Aanya Patel', avatar: 'images/user2.jpg', text: 'I feel this in my soul. Just wait until you inspect the production database schema... 💀' },
-          { user: 'Rohit Sharma',  avatar: 'images/user3.jpg', text: 'Have you tried deleting the node_modules folder and running npm install? That\'s about as much refactoring as I do. 😂' },
-          { user: 'Emma Rodriguez', avatar: 'images/user1.jpg', text: 'Wait, who wrote that helper_final_v2() function? Please don\'t tell me it was my git blame from 2024...' }
+          { user: 'Aanya Patel', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80', text: 'I feel this in my soul. Just wait until you inspect the production database schema... 💀' },
+          { user: 'Rohit Sharma',  avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', text: 'Have you tried deleting the node_modules folder and running npm install? That\'s about as much refactoring as I do. 😂' },
+          { user: 'Emma Rodriguez', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', text: 'Wait, who wrote that helper_final_v2() function? Please don\'t tell me it was my git blame from 2024...' }
         ]
       },
       {
         id: 2,
-        user: { name: 'Sarah Chen', handle: '@sarahchen', avatar: 'images/user2.jpg', role: 'Full Stack Dev Intern' },
+        user: { name: 'Sarah Chen', handle: '@sarahchen', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80', role: 'Full Stack Dev Intern' },
         content: 'Day 15 of my internship at ConnectX: Just pushed my very first hotfix directly to production and didn\'t crash the server! 🚀🎉\n\nHuge thanks to the engineering team for the thorough code reviews and for not laughing at my initial pull request which had 47 comments. Pro tip for incoming interns: keep a notepad next to your keyboard, ask "why" at least ten times a day, and never, ever git push --force on main. 📝💻 #webdev #frontend #prod #milestone #internship',
-        image: 'images/post1.jpg',
+        image: 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=600&h=400&q=80',
         likes: 524,
         comments: 67,
         shares: 43,
@@ -60,15 +60,15 @@ const Feed = {
         liked: false,
         time: new Date(Date.now() - 3*60*60*1000).toISOString(),
         commentsData: [
-          { user: 'Kunal Shah', avatar: 'images/user1.jpg', text: 'Huge congrats Sarah! Meanwhile, my PR is still waiting for review after 4 days. Send your reviewers over! 😂' },
-          { user: 'David Kim', avatar: 'images/user3.jpg', text: 'Pushed to prod on a Friday and the server is still running. You have officially passed the developer test! 🏆' }
+          { user: 'Kunal Shah', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', text: 'Huge congrats Sarah! Meanwhile, my PR is still waiting for review after 4 days. Send your reviewers over! 😂' },
+          { user: 'David Kim', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', text: 'Pushed to prod on a Friday and the server is still running. You have officially passed the developer test! 🏆' }
         ]
       },
       {
         id: 3,
-        user: { name: 'Emma Rodriguez', handle: '@emmarodriguez', avatar: 'images/user3.jpg', role: 'UI/UX Design Lead' },
+        user: { name: 'Emma Rodriguez', handle: '@emmarodriguez', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', role: 'UI/UX Design Lead' },
         content: 'Hot take: Flat design is officially obsolete. Glassmorphism, tailored gradients, and premium micro-animations are the only way to build state-of-the-art applications in 2026. If your buttons don\'t have a satisfying spring scaling on hover, you are losing user engagement. ✨🎨\n\nLet\'s settle the debate: are you Team Clean Minimalist or Team Dynamic Glass? Let me know in the comments! #uiux #design #figma #uxdesign #webdevelopment',
-        image: 'images/post2.jpg',
+        image: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=600&h=400&q=80',
         likes: 289,
         comments: 22,
         shares: 11,
@@ -76,8 +76,8 @@ const Feed = {
         liked: false,
         time: new Date(Date.now() - 18*60*60*1000).toISOString(),
         commentsData: [
-          { user: 'Sarah Chen', avatar: 'images/user2.jpg', text: 'Team Dynamic Glass all day! The visual feedback makes the app feel so alive.' },
-          { user: 'David Kim',  avatar: 'images/user3.jpg', text: 'It looks absolutely stunning, Emma! Right up until the developers see the CSS backdrop-filter performance on mobile devices... 😅' }
+          { user: 'Sarah Chen', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80', text: 'Team Dynamic Glass all day! The visual feedback makes the app feel so alive.' },
+          { user: 'David Kim',  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', text: 'It looks absolutely stunning, Emma! Right up until the developers see the CSS backdrop-filter performance on mobile devices... 😅' }
         ]
       }
     ];
@@ -100,13 +100,13 @@ const Feed = {
     if (!container) return;
 
     const stories = [
-      { name: 'Your Story', avatar: App.currentUser?.avatar || 'images/user1.jpg', isAdd: true },
-      { name: 'Kunal S.',     avatar: 'images/user1.jpg', viewed: false },
-      { name: 'Sarah C.',   avatar: 'images/user2.jpg', viewed: false },
-      { name: 'Emma R.',    avatar: 'images/user3.jpg', viewed: true  },
-      { name: 'Aanya P.',   avatar: 'images/user2.jpg', viewed: false },
-      { name: 'Rohit S.',    avatar: 'images/user3.jpg', viewed: true  },
-      { name: 'David K.',    avatar: 'images/user3.jpg', viewed: false },
+      { name: 'Your Story', avatar: App.currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', isAdd: true },
+      { name: 'Kunal S.',     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', viewed: false },
+      { name: 'Sarah C.',   avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80', viewed: false },
+      { name: 'Emma R.',    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', viewed: true  },
+      { name: 'Aanya P.',   avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80', viewed: false },
+      { name: 'Rohit S.',    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', viewed: true  },
+      { name: 'David K.',    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80', viewed: false },
     ];
 
     container.innerHTML = stories.map((s, i) => {
@@ -210,7 +210,7 @@ const Feed = {
           <i class="fas fa-share"></i>
           <span>Share</span>
         </button>
-        <button class="post-action-btn ${post.saved ? 'liked' : ''}"
+        <button class="post-action-btn ${post.saved ? 'saved' : ''}"
                 onclick="Feed.toggleSave(${post.id})"
                 aria-label="${post.saved ? 'Unsave' : 'Save'} post">
           <i class="${post.saved ? 'fas' : 'far'} fa-bookmark"></i>
@@ -229,7 +229,7 @@ const Feed = {
           </div>
         `).join('')}
         <div class="comment-input-row">
-          <img src="${App.currentUser?.avatar || 'images/user1.jpg'}"
+          <img src="${App.currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80'}"
                alt="You" class="avatar avatar-sm">
           <input type="text" class="comment-input" placeholder="Write a comment..."
                  id="comment-input-${post.id}" aria-label="Write a comment">
@@ -363,7 +363,7 @@ const Feed = {
     const user  = App.currentUser;
     if (!post || !user) return;
 
-    const newComment = { user: user.name, avatar: user.avatar || 'images/user1.jpg', text };
+    const newComment = { user: user.name, avatar: user.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', text };
     post.commentsData.push(newComment);
     post.comments++;
 
@@ -432,7 +432,7 @@ const Feed = {
     const user = App.currentUser;
     const newPost = {
       id: Date.now(),
-      user: { name: user.name, handle: user.handle, avatar: user.avatar || 'images/user1.jpg', role: user.role || 'Member' },
+      user: { name: user.name, handle: user.handle, avatar: user.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80', role: user.role || 'Member' },
       content,
       image: null,
       likes: 0,
@@ -464,10 +464,10 @@ const Feed = {
     const suggestedContainer = document.getElementById('suggested-users');
     if (suggestedContainer) {
       const users = [
-        { name: 'Aanya Patel',  role: 'Lead Data Scientist', avatar: 'images/user2.jpg' },
-        { name: 'Rohit Sharma',  role: 'DevOps Architect',    avatar: 'images/user3.jpg' },
-        { name: 'Liam Vance',   role: 'Senior Frontend Dev', avatar: 'images/user1.jpg' },
-        { name: 'Sophia Loren', role: 'Engineering Manager', avatar: 'images/user2.jpg' },
+        { name: 'Aanya Patel',  role: 'Lead Data Scientist', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80' },
+        { name: 'Rohit Sharma',  role: 'DevOps Architect',    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80' },
+        { name: 'Liam Vance',   role: 'Senior Frontend Dev', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80' },
+        { name: 'Sophia Loren', role: 'Engineering Manager', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80' },
       ];
 
       suggestedContainer.innerHTML = users.map((u, i) => `

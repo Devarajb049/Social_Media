@@ -8,6 +8,7 @@ const Events = {
   initialized: false,
   activeFilter: 'all',
   registered: new Set(JSON.parse(localStorage.getItem('sp-registered-events') || '[]')),
+  saved: new Set(JSON.parse(localStorage.getItem('sp-saved-events') || '[]')),
 
   eventsData: [
     {
@@ -108,16 +109,19 @@ const Events = {
     const bar = document.getElementById('events-filter-bar');
     if (!bar) return;
 
-    const filters = ['All', 'Online', 'In-Person', 'Hybrid', 'Free', 'Technology', 'Design', 'AI/ML'];
-    bar.innerHTML = filters.map(f => `
+    const filters = ['All', 'Favorites', 'Online', 'In-Person', 'Hybrid', 'Free', 'Technology', 'Design', 'AI/ML'];
+    bar.innerHTML = filters.map(f => {
+      const isFav = f === 'Favorites';
+      const label = isFav ? '<i class="fas fa-heart" style="color:var(--like);margin-right:4px;"></i> Favorites' : f;
+      return `
       <button class="filter-chip ${f === 'All' ? 'active' : ''}"
               data-filter="${f.toLowerCase()}"
               onclick="Events.filterEvents('${f.toLowerCase()}')"
               aria-pressed="${f === 'All'}"
               aria-label="Filter by ${f}">
-        ${f}
+        ${label}
       </button>
-    `).join('');
+    `}).join('');
   },
 
   filterEvents(filter) {
@@ -136,6 +140,9 @@ const Events = {
   getFilteredEvents() {
     const f = this.activeFilter;
     if (f === 'all') return this.eventsData;
+    if (f === 'favorites') {
+      return this.eventsData.filter(e => this.saved.has(e.id));
+    }
     return this.eventsData.filter(e =>
       e.type === f ||
       e.price.toLowerCase() === f ||
@@ -150,12 +157,21 @@ const Events = {
 
     const events = this.getFilteredEvents();
     if (!events.length) {
-      grid.innerHTML = `
-        <div class="empty-state" style="grid-column:1/-1;">
-          <i class="fas fa-calendar-xmark"></i>
-          <h3>No events found</h3>
-          <p>Try a different filter</p>
-        </div>`;
+      if (this.activeFilter === 'favorites') {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;padding:var(--space-2xl) var(--space-lg);text-align:center;background:var(--surface-card);border:1px solid var(--border-color);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);">
+            <i class="fas fa-heart" style="font-size:3rem;color:var(--like);margin-bottom:var(--space-md);display:block;animation:heartbeat 1.5s infinite;"></i>
+            <h3 style="font-size:var(--fs-md);font-weight:700;color:var(--text-primary);margin-bottom:6px;">No favorite events yet</h3>
+            <p style="font-size:var(--fs-sm);color:var(--text-muted);max-width:320px;margin:0 auto;line-height:1.5;">Click the heart icon on any event card to save it here for quick access!</p>
+          </div>`;
+      } else {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <i class="fas fa-calendar-xmark"></i>
+            <h3>No events found</h3>
+            <p>Try a different filter</p>
+          </div>`;
+      }
       return;
     }
 
@@ -165,6 +181,7 @@ const Events = {
 
   eventCardHTML(event) {
     const isReg = this.registered.has(event.id);
+    const isSaved = this.saved.has(event.id);
     const isFree = event.price === 'Free';
 
     return `
@@ -174,10 +191,11 @@ const Events = {
         <div class="event-card-img-overlay"></div>
         <div class="event-badge-row">
           <span class="event-type-badge ${event.type}">${this.typeLabel(event.type)}</span>
-          <button class="event-save-btn ${isReg ? 'saved' : ''}"
+          <button class="event-save-btn ${isSaved ? 'saved' : ''}"
+                  id="save-btn-${event.id}"
                   aria-label="Save event"
                   onclick="Events.toggleSave(event, ${event.id})">
-            <i class="fa${isReg ? 's' : 'r'} fa-heart"></i>
+            <i class="fa${isSaved ? 's' : 'r'} fa-heart"></i>
           </button>
         </div>
         <div class="event-date-chip">
@@ -263,7 +281,32 @@ const Events = {
 
   toggleSave(e, eventId) {
     e?.stopPropagation?.();
-    App.showToast('Event saved to your calendar! 📅', 'success', 2000);
+    e?.preventDefault?.();
+    const btn = document.getElementById(`save-btn-${eventId}`);
+    
+    if (this.saved.has(eventId)) {
+      this.saved.delete(eventId);
+      if (btn) {
+        btn.classList.remove('saved');
+        const icon = btn.querySelector('i');
+        if (icon) icon.className = 'far fa-heart';
+      }
+      App.showToast('Event removed from favorites', 'info', 2000);
+    } else {
+      this.saved.add(eventId);
+      if (btn) {
+        btn.classList.add('saved');
+        const icon = btn.querySelector('i');
+        if (icon) icon.className = 'fas fa-heart';
+      }
+      App.showToast('Event saved to favorites! ❤️', 'success', 2000);
+    }
+
+    localStorage.setItem('sp-saved-events', JSON.stringify([...this.saved]));
+
+    if (this.activeFilter === 'favorites') {
+      this.renderEvents();
+    }
   },
 
   startAllCountdowns() {

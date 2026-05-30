@@ -145,6 +145,8 @@ const Dashboard = {
     // Activate nav links
     document.querySelectorAll(`[data-section="${sectionId}"]`).forEach(l => l.classList.add('active'));
 
+
+
     // Show/hide create-post FAB (only visible on feed)
     const fab = document.getElementById('fab-create');
     if (fab) {
