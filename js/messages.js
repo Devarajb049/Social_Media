@@ -444,25 +444,28 @@ const Messages = {
 
     win.innerHTML = `
     <div class="chat-empty">
-      <i class="fas fa-comments"></i>
-      <h3>Select a conversation</h3>
-      <p>Choose from your existing messages<br>or start a new conversation</p>
+      <div class="chat-empty-card">
+        <!-- Floating Neon Ambient Orbs -->
+        <div class="chat-empty-orb"></div>
+        <div class="chat-empty-orb-2"></div>
 
-      <button
-        class="btn btn-primary"
-        style="
-          margin-top:var(--space-md);
-          padding:6px 14px;
-          height:auto;
-          border-radius:var(--radius-full);
-          font-weight:var(--fw-semibold);
-          font-size:11px;
-          box-shadow:var(--shadow-button);
-        "
-        onclick="App.showToast('New message feature coming soon!','info')"
-      >
-        <i class="fas fa-pen"></i> New Message
-      </button>
+        <!-- Drifting Stacked Icon -->
+        <div class="chat-empty-icon-container">
+          <div class="chat-empty-icon-bg"></div>
+          <i class="fas fa-comments"></i>
+        </div>
+
+        <h3>Select a conversation</h3>
+        <p>Choose from your existing messages<br>or start a new conversation</p>
+
+        <button
+          class="btn btn-new-msg"
+          onclick="App.showToast('New message feature coming soon!','info')"
+          aria-label="Start a new message"
+        >
+          <i class="fas fa-pen"></i> New Message
+        </button>
+      </div>
     </div>`;
   },
   goBack() {

@@ -134,6 +134,12 @@
         <!-- Header Actions -->
         <div class="header-actions" role="group" aria-label="Header actions">
 
+          <!-- Theme Toggle -->
+          <button class="header-action-btn" id="theme-toggle" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+            <i class="fas fa-moon theme-icon-moon"></i>
+            <i class="fas fa-sun theme-icon-sun"></i>
+          </button>
+
           <!-- Notifications -->
           <button class="header-action-btn" id="notif-bell" aria-label="View notifications, 3 unread"
             title="Notifications">
@@ -756,10 +762,26 @@
     </div>
   </div>
 
-  <!-- Floating Action Button -->
-  <button class="fab" id="fab-create" aria-label="Create new post">
-    <i class="fas fa-plus" aria-hidden="true"></i>
-  </button>
+  <!-- Floating Action Menu Container -->
+  <div class="floating-menu-container" id="floating-menu-wrap">
+    <button class="fab" id="fab-create" aria-label="Open creation actions">
+      <i class="fas fa-plus" aria-hidden="true"></i>
+    </button>
+    <div class="floating-menu-actions" role="menu" aria-label="Creation Actions">
+      <button class="floating-menu-item" data-action="event" role="menuitem" aria-label="Create Event">
+        <i class="fas fa-calendar-plus" aria-hidden="true"></i>
+        <span>Event</span>
+      </button>
+      <button class="floating-menu-item" data-action="project" role="menuitem" aria-label="Share Project">
+        <i class="fas fa-lightbulb" aria-hidden="true"></i>
+        <span>Project</span>
+      </button>
+      <button class="floating-menu-item" data-action="post" role="menuitem" aria-label="Write Post">
+        <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+        <span>Post</span>
+      </button>
+    </div>
+  </div>
 
   <!-- Toast Container (populated by app.js) -->
   <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>

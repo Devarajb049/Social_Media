@@ -450,24 +450,148 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--text-muted);
-  text-align: center;
-  padding: var(--space-2xl);
+  padding: var(--space-3xl);
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle 350px at center, rgba(124, 58, 237, 0.04) 0%, transparent 100%);
 }
 
-.chat-empty i {
-  font-size: 48px !important;
+.chat-empty-card {
+  background: var(--surface-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl) var(--space-xl);
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.chat-empty-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(124, 58, 237, 0.20);
+}
+
+/* Floating Ambient Orb inside Card */
+.chat-empty-orb {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+  animation: orbFloat 8s ease-in-out infinite alternate;
+}
+
+.chat-empty-orb-2 {
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, rgba(255, 46, 147, 0.12) 0%, transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+  animation: orbFloat 10s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(15px, 15px) scale(1.1); }
+}
+
+/* Drifting Stacked Icon */
+.chat-empty-icon-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: var(--space-lg);
-  opacity: 0.30;
+  animation: floatIcon 6s ease-in-out infinite;
+}
+
+.chat-empty-icon-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(255, 46, 147, 0.03) 100%);
+  border-radius: var(--radius-md);
+  transform: rotate(45deg);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+}
+
+.chat-empty-icon-container i {
+  font-size: 2.2rem !important;
+  z-index: 2;
   background: var(--gradient-main);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
 .chat-empty h3 {
+  font-family: var(--font-heading);
   font-size: var(--fs-lg);
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-extrabold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.01em;
+}
+
+.chat-empty p {
+  font-size: var(--fs-xs);
   color: var(--text-secondary);
-  margin-bottom: var(--space-sm);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+.chat-empty .btn-new-msg {
+  background: var(--gradient-button);
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: var(--radius-full);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-xs);
+  box-shadow: var(--shadow-button);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.chat-empty .btn-new-msg:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(255, 46, 147, 0.35);
+}
+
+.chat-empty .btn-new-msg i {
+  font-size: 0.85rem !important;
+  color: #fff !important;
+  margin-bottom: 0 !important;
+  opacity: 1 !important;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  background-clip: initial !important;
 }

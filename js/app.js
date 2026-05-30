@@ -18,6 +18,9 @@ const App = {
     // Prevent FOUC by applying theme immediately
     this.applyThemeSilently();
 
+    // Initialize theme toggle listener
+    this.initThemeToggle();
+
     // Auth guard: protect dashboard pages
     this.authGuard();
 
@@ -49,13 +52,33 @@ const App = {
    */
   applyThemeSilently() {
     document.documentElement.classList.add('no-transition');
-    document.documentElement.setAttribute('data-theme', 'light');
-    this.theme = 'light';
+    const savedTheme = localStorage.getItem('connectx-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    this.theme = savedTheme;
     // Remove no-transition class after paint
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         document.documentElement.classList.remove('no-transition');
       });
+    });
+  },
+
+  /**
+   * Initialize interactive theme toggle button if present in DOM
+   */
+  initThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('connectx-theme', newTheme);
+      this.theme = newTheme;
+      
+      console.log(`[App] Theme switched to: ${newTheme}`);
     });
   },
 

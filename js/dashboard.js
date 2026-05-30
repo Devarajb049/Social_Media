@@ -221,15 +221,42 @@ const Dashboard = {
    */
   initFAB() {
     const fab = document.getElementById('fab-create');
-    if (!fab) return;
+    const container = document.getElementById('floating-menu-wrap');
+    if (!fab || !container) return;
 
-    fab.addEventListener('click', () => {
-      const modal = document.getElementById('create-post-modal');
-      if (modal) {
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        modal.querySelector('textarea')?.focus();
+    // Toggle menu
+    fab.addEventListener('click', (e) => {
+      e.stopPropagation();
+      container.classList.toggle('open');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#floating-menu-wrap')) {
+        container.classList.remove('open');
       }
+    });
+
+    // Click handlers for individual menu options
+    const items = container.querySelectorAll('.floating-menu-item');
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const action = item.getAttribute('data-action');
+        container.classList.remove('open'); // Close menu
+
+        if (action === 'post') {
+          const modal = document.getElementById('create-post-modal');
+          if (modal) {
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            modal.querySelector('textarea')?.focus();
+          }
+        } else if (action === 'event') {
+          App.showToast('Initializing Event Creation Wizard... Coming soon!', 'success');
+        } else if (action === 'project') {
+          App.showToast('Initializing Project Showcase Upload!', 'info');
+        }
+      });
     });
 
     // Modal close
