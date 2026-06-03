@@ -35,15 +35,191 @@ const Auth = {
       });
     }
 
-    // Social login buttons (demo toast alert)
+    // Social login buttons (Direct mock authentication)
     document.querySelectorAll('.btn-oauth').forEach(b => {
       b.addEventListener('click', () => {
-        if (typeof App !== 'undefined' && App.showToast) {
-          App.showToast('OAuth flow is ready and configured! Redirecting...', 'info');
+        const text = b.textContent.trim().toLowerCase();
+        let mockUser;
+        if (text.includes('google')) {
+          mockUser = {
+            id: 'google-oauth-' + Date.now(),
+            name: 'Alex Morgan',
+            email: 'alex@google.com',
+            handle: '@alex_morgan',
+            avatar: 'images/user1.jpg',
+            role: 'UX Designer',
+            bio: 'Lead UX designer at ConnectX. Passionate about interfaces and screen readers.',
+            followers: 1284,
+            following: 367,
+            posts: 42
+          };
         } else {
-          alert('OAuth configured!');
+          mockUser = {
+            id: 'github-oauth-' + Date.now(),
+            name: 'Sarah Chen',
+            email: 'sarah@github.com',
+            handle: '@sarah_chen',
+            avatar: 'images/user2.jpg',
+            role: 'Full Stack Developer',
+            bio: 'Clean coder. I like components and keyboard navigation.',
+            followers: 2450,
+            following: 580,
+            posts: 95
+          };
+        }
+        
+        localStorage.setItem('sp-user', JSON.stringify(mockUser));
+        if (typeof App !== 'undefined' && App.showToast) {
+          App.showToast(`Logged in via ${text.includes('google') ? 'Google' : 'GitHub'}! Welcome, ${mockUser.name}! 🎉`, 'success');
+        }
+        setTimeout(() => { window.location.href = 'main.html'; }, 850);
+      });
+    });
+
+    // Forgot Password Link Click
+    const forgotLink = document.getElementById('forgot-password-link');
+    const forgotModal = document.getElementById('forgot-password-modal');
+    const forgotClose = document.getElementById('forgot-close');
+    const forgotEmailIn = document.getElementById('forgot-email');
+    const forgotCodeIn = document.getElementById('forgot-code');
+    const forgotPassIn = document.getElementById('forgot-new-password');
+
+    if (forgotLink && forgotModal) {
+      forgotLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        forgotModal.classList.add('open');
+        forgotModal.style.display = 'flex';
+        // Reset steps
+        document.getElementById('forgot-step-1').style.display = 'block';
+        document.getElementById('forgot-step-2').style.display = 'none';
+        document.getElementById('forgot-step-3').style.display = 'none';
+        
+        document.getElementById('forgot-email-error').classList.remove('visible');
+        document.getElementById('forgot-code-error').classList.remove('visible');
+        document.getElementById('forgot-pass-error').classList.remove('visible');
+        
+        if (forgotEmailIn) {
+          forgotEmailIn.value = '';
+          setTimeout(() => forgotEmailIn.focus(), 80);
+        }
+        if (forgotCodeIn) forgotCodeIn.value = '';
+        if (forgotPassIn) forgotPassIn.value = '';
+        
+        if (typeof App !== 'undefined' && App.focusTrap) {
+          App.focusTrap(forgotModal);
         }
       });
+    }
+
+    if (forgotClose && forgotModal) {
+      forgotClose.addEventListener('click', () => {
+        forgotModal.classList.remove('open');
+        forgotModal.style.display = 'none';
+        forgotLink?.focus();
+      });
+    }
+
+    // Forgot Step 1: Send reset code
+    document.getElementById('forgot-send-btn')?.addEventListener('click', () => {
+      const email = forgotEmailIn?.value.trim();
+      const err = document.getElementById('forgot-email-error');
+      if (!email || !this.isValidEmail(email)) {
+        if (err) {
+          err.querySelector('span').textContent = 'Please enter a valid email address';
+          err.classList.add('visible');
+        }
+        return;
+      }
+      err?.classList.remove('visible');
+      
+      // Go to Step 2
+      document.getElementById('forgot-step-1').style.display = 'none';
+      document.getElementById('forgot-step-2').style.display = 'block';
+      if (typeof App !== 'undefined' && App.showToast) {
+        App.showToast('Verification code sent!', 'success');
+      }
+      setTimeout(() => forgotCodeIn?.focus(), 50);
+    });
+
+    // Forgot Step 2: Verify code
+    document.getElementById('forgot-verify-btn')?.addEventListener('click', () => {
+      const code = forgotCodeIn?.value.trim();
+      const err = document.getElementById('forgot-code-error');
+      if (!code || code !== '1234') {
+        if (err) {
+          err.querySelector('span').textContent = 'Invalid code. Use 1234 to bypass.';
+          err.classList.add('visible');
+        }
+        return;
+      }
+      err?.classList.remove('visible');
+      
+      // Go to Step 3
+      document.getElementById('forgot-step-2').style.display = 'none';
+      document.getElementById('forgot-step-3').style.display = 'block';
+      setTimeout(() => forgotPassIn?.focus(), 50);
+    });
+
+    // Toggle forgot password visibility
+    const toggleForgotPwBtn = document.getElementById('toggle-forgot-pw');
+    if (toggleForgotPwBtn && forgotPassIn) {
+      toggleForgotPwBtn.addEventListener('click', () => {
+        const isText = forgotPassIn.type === 'text';
+        forgotPassIn.type = isText ? 'password' : 'text';
+        toggleForgotPwBtn.className = `auth-pw-toggle fas ${isText ? 'fa-eye' : 'fa-eye-slash'}`;
+      });
+    }
+
+    // Forgot Step 3: Update password
+    document.getElementById('forgot-reset-btn')?.addEventListener('click', () => {
+      const password = forgotPassIn?.value.trim();
+      const err = document.getElementById('forgot-pass-error');
+      if (!password || password.length < 6) {
+        if (err) {
+          err.querySelector('span').textContent = 'Password must be at least 6 characters';
+          err.classList.add('visible');
+        }
+        return;
+      }
+      err?.classList.remove('visible');
+
+      // Update password in localStorage
+      const email = forgotEmailIn?.value.trim();
+      const users = JSON.parse(localStorage.getItem('sp-users') || '[]');
+      const user = users.find(u => u.email === email);
+      if (user) {
+        user.password = password;
+        localStorage.setItem('sp-users', JSON.stringify(users));
+      } else {
+        // Create demo user if they reset password for unregistered email
+        const newUser = {
+          id: 'user-' + Date.now(),
+          name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+          email,
+          password,
+          handle: '@' + email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, ''),
+          avatar: 'images/user1.jpg',
+          role: 'Creative Professional',
+          bio: 'Connecting dots, making UI screens interactive.',
+          followers: 1200,
+          following: 340,
+          posts: 0
+        };
+        users.push(newUser);
+        localStorage.setItem('sp-users', JSON.stringify(users));
+      }
+
+      if (typeof App !== 'undefined' && App.showToast) {
+        App.showToast('Password updated! You can now log in.', 'success');
+      }
+
+      // Close modal and fill email in login form
+      forgotModal.classList.remove('open');
+      forgotModal.style.display = 'none';
+      if (emailIn) {
+        emailIn.value = email;
+        passIn?.focus();
+      }
     });
 
     // Form submission
@@ -87,6 +263,7 @@ const Auth = {
           id: 'demo-' + Date.now(),
           name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
           email,
+          password,
           handle: '@' + handleName,
           avatar: 'images/user1.jpg',
           role: 'Product Designer',
@@ -151,14 +328,44 @@ const Auth = {
       });
     }
 
-    // Social login buttons (demo toast alert)
+    // Social login buttons (Direct mock authentication)
     document.querySelectorAll('.btn-oauth').forEach(b => {
       b.addEventListener('click', () => {
-        if (typeof App !== 'undefined' && App.showToast) {
-          App.showToast('OAuth account signup ready! Redirecting...', 'info');
+        const text = b.textContent.trim().toLowerCase();
+        let mockUser;
+        if (text.includes('google')) {
+          mockUser = {
+            id: 'google-oauth-' + Date.now(),
+            name: 'Alex Morgan',
+            email: 'alex@google.com',
+            handle: '@alex_morgan',
+            avatar: 'images/user1.jpg',
+            role: 'UX Designer',
+            bio: 'Lead UX designer at ConnectX. Passionate about interfaces and screen readers.',
+            followers: 1284,
+            following: 367,
+            posts: 42
+          };
         } else {
-          alert('OAuth configured!');
+          mockUser = {
+            id: 'github-oauth-' + Date.now(),
+            name: 'Sarah Chen',
+            email: 'sarah@github.com',
+            handle: '@sarah_chen',
+            avatar: 'images/user2.jpg',
+            role: 'Full Stack Developer',
+            bio: 'Clean coder. I like components and keyboard navigation.',
+            followers: 2450,
+            following: 580,
+            posts: 95
+          };
         }
+        
+        localStorage.setItem('sp-user', JSON.stringify(mockUser));
+        if (typeof App !== 'undefined' && App.showToast) {
+          App.showToast(`Signed up and logged in via ${text.includes('google') ? 'Google' : 'GitHub'}! Welcome, ${mockUser.name}! 🎉`, 'success');
+        }
+        setTimeout(() => { window.location.href = 'main.html'; }, 850);
       });
     });
 

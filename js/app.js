@@ -226,25 +226,263 @@ const App = {
   },
 
   /**
-   * Accessibility: skip link, focus management
+   * Accessibility: skip link, focus management, TTS narrator, shortcuts
    */
+  ttsActive: false,
+  activeSpeech: null,
+
   initAccessibility() {
-    // Keyboard navigation for dropdowns
+    // Sync initial states from localStorage
+    const largeTextActive = localStorage.getItem('acc-large-text') === 'true';
+    if (largeTextActive) {
+      document.documentElement.classList.add('accessibility-large-fonts');
+    }
+    const ttsActiveSetting = localStorage.getItem('acc-tts') === 'true';
+    this.ttsActive = ttsActiveSetting;
+
+    // Connect checkboxes if we are on main.html or login.html
+    const contrastChk = document.getElementById('acc-contrast-toggle');
+    const textChk = document.getElementById('acc-text-toggle');
+    const ttsChk = document.getElementById('acc-tts-toggle');
+    const kbdBtn = document.getElementById('acc-keyboard-btn');
+    const kbdClose = document.getElementById('kbd-close');
+    const kbdModal = document.getElementById('keyboard-guide-modal');
+
+    // Sync UI elements
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    if (contrastChk) {
+      contrastChk.checked = currentTheme === 'contrast';
+      contrastChk.addEventListener('change', (e) => {
+        this.toggleContrast(e.target.checked);
+      });
+    }
+    if (textChk) {
+      textChk.checked = largeTextActive;
+      textChk.addEventListener('change', (e) => {
+        this.toggleLargeText(e.target.checked);
+      });
+    }
+    if (ttsChk) {
+      ttsChk.checked = ttsActiveSetting;
+      ttsChk.addEventListener('change', (e) => {
+        this.toggleTTS(e.target.checked);
+      });
+    }
+
+    // Keyboard Guide Dialog
+    if (kbdBtn && kbdModal) {
+      kbdBtn.addEventListener('click', () => {
+        // Close accessibility panel first
+        document.getElementById('accessibility-panel')?.classList.remove('open');
+        kbdModal.classList.add('open');
+        kbdModal.style.display = 'flex';
+        this.focusTrap(kbdModal);
+      });
+    }
+    if (kbdClose && kbdModal) {
+      kbdClose.addEventListener('click', () => {
+        kbdModal.classList.remove('open');
+        kbdModal.style.display = 'none';
+        // Return focus to accessibility button
+        document.getElementById('accessibility-toggle-btn')?.focus();
+      });
+    }
+
+    // Keyboard Shortcut dispatcher (Alt+A, Alt+H, Alt+T, Alt+K)
     document.addEventListener('keydown', (e) => {
+      // Check Alt combinations
+      if (e.altKey) {
+        const key = e.key.toLowerCase();
+        if (key === 'a') {
+          e.preventDefault();
+          const panel = document.getElementById('accessibility-panel');
+          if (panel) {
+            panel.classList.toggle('open');
+            const isOpen = panel.classList.contains('open');
+            document.getElementById('accessibility-toggle-btn')?.setAttribute('aria-expanded', String(isOpen));
+            if (isOpen) {
+              panel.querySelector('input')?.focus();
+            }
+          }
+        } else if (key === 'h') {
+          e.preventDefault();
+          const currentTheme = document.documentElement.getAttribute('data-theme');
+          const isContrast = currentTheme === 'contrast';
+          this.toggleContrast(!isContrast);
+          if (contrastChk) contrastChk.checked = !isContrast;
+        } else if (key === 't') {
+          e.preventDefault();
+          this.toggleTTS(!this.ttsActive);
+          if (ttsChk) ttsChk.checked = this.ttsActive;
+        } else if (key === 'k') {
+          e.preventDefault();
+          if (kbdModal) {
+            kbdModal.classList.add('open');
+            kbdModal.style.display = 'flex';
+            this.focusTrap(kbdModal);
+          }
+        }
+      }
+
       if (e.key === 'Escape') {
-        // Close all open dropdowns/modals
+        // Close all modals
         document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
-        document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+        document.querySelectorAll('.accessibility-panel.open').forEach(p => p.classList.remove('open'));
+        
+        const openModals = document.querySelectorAll('.modal-overlay.open');
+        openModals.forEach(m => {
+          m.classList.remove('open');
+          m.style.display = 'none';
+        });
         document.body.style.overflow = '';
+        
+        // Return focus to appropriate triggers
+        if (openModals.length > 0) {
+          const firstModalId = openModals[0].id;
+          if (firstModalId === 'keyboard-guide-modal') {
+            document.getElementById('accessibility-toggle-btn')?.focus();
+          } else if (firstModalId === 'create-post-modal') {
+            document.getElementById('create-post-box')?.focus();
+          }
+        }
       }
     });
 
-    // Close dropdowns on outside click
+    // Close dropdowns and panels on outside click
     document.addEventListener('click', (e) => {
       if (!e.target.closest('[data-dropdown]')) {
         document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+        document.querySelectorAll('.accessibility-panel.open').forEach(p => p.classList.remove('open'));
       }
     });
+
+    // Text to speech narration on focus change
+    document.addEventListener('focusin', (e) => {
+      if (!this.ttsActive) return;
+      
+      const el = e.target;
+      let text = '';
+
+      // Skip elements inside search-overlay unless active
+      const searchOverlay = document.getElementById('search-overlay');
+      if (el.closest('.search-overlay') && searchOverlay && searchOverlay.style.display === 'none') {
+        return;
+      }
+
+      // Check accessible fields
+      if (el.getAttribute('aria-label')) {
+        text = el.getAttribute('aria-label');
+      } else if (el.placeholder) {
+        text = el.placeholder;
+      } else if (el.innerText && el.innerText.trim().length > 0) {
+        text = el.innerText;
+      } else if (el.title) {
+        text = el.title;
+      }
+
+      if (text) {
+        // Simplify announcements (remove icon symbols)
+        text = text.replace(/[^\w\s\s+\-.!,?]/gi, '').trim();
+        if (text) {
+          this.speak(text);
+        }
+      }
+    });
+  },
+
+  speak(text) {
+    if (!window.speechSynthesis) return;
+    try {
+      window.speechSynthesis.cancel(); // Stop current speech
+      
+      // Announce via dynamic announcer area as fallback
+      const announcer = document.getElementById('tts-announcer');
+      if (announcer) {
+        announcer.textContent = text;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    } catch(e) {}
+  },
+
+  toggleContrast(active) {
+    const theme = active ? 'contrast' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('connectx-theme', theme);
+    this.theme = theme;
+    
+    // Toggle checkmark icon on theme-toggle if it exists
+    const toggleIcon = document.querySelector('#theme-toggle i');
+    if (toggleIcon) {
+      toggleIcon.className = active ? 'fas fa-eye' : 'fas fa-moon';
+    }
+
+    this.speak(`High contrast mode ${active ? 'enabled' : 'disabled'}`);
+    this.showToast(`High contrast mode ${active ? 'enabled' : 'disabled'}`, 'info');
+  },
+
+  toggleLargeText(active) {
+    if (active) {
+      document.documentElement.classList.add('accessibility-large-fonts');
+    } else {
+      document.documentElement.classList.remove('accessibility-large-fonts');
+    }
+    localStorage.setItem('acc-large-text', String(active));
+    this.speak(`Large text mode ${active ? 'enabled' : 'disabled'}`);
+    this.showToast(`Large text mode ${active ? 'enabled' : 'disabled'}`, 'info');
+  },
+
+  toggleTTS(active) {
+    this.ttsActive = active;
+    localStorage.setItem('acc-tts', String(active));
+    
+    if (active) {
+      this.speak("Screen reader narration enabled");
+      this.showToast("Screen reader narrator enabled", "success");
+    } else {
+      this.showToast("Screen reader narrator disabled", "info");
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    }
+  },
+
+  focusTrap(modal) {
+    if (!modal) return;
+    
+    // Find all focusable children
+    const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusableElements.length === 0) return;
+    
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+    
+    // Focus first element
+    setTimeout(() => firstElement.focus(), 50);
+    
+    const trapHandler = (e) => {
+      if (e.key === 'Tab') {
+        if (e.shiftKey) { // Shift + Tab
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else { // Tab
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    };
+    
+    // Clean up previous event listener to avoid stacking
+    modal.removeEventListener('keydown', modal._trapHandler);
+    modal._trapHandler = trapHandler;
+    modal.addEventListener('keydown', trapHandler);
   },
 
   /**

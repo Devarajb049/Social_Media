@@ -99,10 +99,25 @@ const Events = {
   init() {
     if (this.initialized) return;
     this.initialized = true;
+
+    // Load custom events from localStorage
+    const stored = localStorage.getItem('sp-events-data');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        parsed.forEach(pe => {
+          if (!this.eventsData.find(e => e.id === pe.id)) {
+            this.eventsData.unshift(pe);
+          }
+        });
+      } catch(e) {}
+    }
+
     this.renderFilterBar();
     this.renderEvents();
     this.renderSpeakers();
     this.startAllCountdowns();
+    this.initCreateEventForm();
   },
 
   renderFilterBar() {
@@ -176,6 +191,22 @@ const Events = {
     }
 
     grid.innerHTML = events.map(e => this.eventCardHTML(e)).join('');
+    
+    // Add keydown listeners for accessibility
+    events.forEach(e => {
+      const el = document.getElementById(`event-${e.id}`);
+      if (el) {
+        el.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            if (ev.target.tagName !== 'BUTTON' && !ev.target.closest('button')) {
+              ev.preventDefault();
+              this.showDetails(e.id);
+            }
+          }
+        });
+      }
+    });
+
     this.startAllCountdowns();
   },
 
@@ -185,7 +216,7 @@ const Events = {
     const isFree = event.price === 'Free';
 
     return `
-    <article class="event-card" id="event-${event.id}" aria-label="${event.title}">
+    <article class="event-card" id="event-${event.id}" aria-label="Event: ${event.title}. Category: ${event.category}. Format: ${this.typeLabel(event.type)}. Click or press Enter to view details." tabindex="0" onclick="Events.showDetails(${event.id})">
       <div class="event-card-img-wrapper">
         <img src="${event.image}" alt="${event.title}" class="event-card-img" loading="lazy">
         <div class="event-card-img-overlay"></div>
@@ -193,8 +224,8 @@ const Events = {
           <span class="event-type-badge ${event.type}">${this.typeLabel(event.type)}</span>
           <button class="event-save-btn ${isSaved ? 'saved' : ''}"
                   id="save-btn-${event.id}"
-                  aria-label="Save event"
-                  onclick="Events.toggleSave(event, ${event.id})">
+                  aria-label="${isSaved ? 'Unsave' : 'Save'} event"
+                  onclick="event.stopPropagation(); Events.toggleSave(event, ${event.id})">
             <i class="fa${isSaved ? 's' : 'r'} fa-heart"></i>
           </button>
         </div>
@@ -241,13 +272,203 @@ const Events = {
           </div>
           <button class="btn-register ${isReg ? 'registered' : ''}"
                   id="reg-btn-${event.id}"
-                  onclick="Events.register(${event.id})"
+                  onclick="event.stopPropagation(); Events.register(${event.id})"
                   aria-pressed="${isReg}">
             ${isReg ? '✓ Registered' : 'Register Now'}
           </button>
         </div>
       </div>
     </article>`;
+  },
+
+  showDetails(eventId) {
+    const event = this.eventsData.find(e => e.id === eventId);
+    if (!event) return;
+
+    const modal = document.getElementById('event-details-modal');
+    const body = document.getElementById('event-details-body');
+    const closeBtn = document.getElementById('event-details-close');
+    if (!modal || !body) return;
+
+    const isReg = this.registered.has(event.id);
+    const isFree = event.price === 'Free';
+
+    body.innerHTML = `
+      <div style="position:relative; border-radius: var(--radius-lg); overflow:hidden; height:240px; margin-bottom: var(--space-md);">
+        <img src="${event.image}" alt="${event.title}" style="width:100%; height:100%; object-fit:cover;">
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);"></div>
+        <div style="position:absolute; bottom:var(--space-md); left:var(--space-md); color:white;">
+          <span class="event-type-badge ${event.type}" style="margin-bottom:var(--space-xs); display:inline-block;">${this.typeLabel(event.type)}</span>
+          <h3 style="color:white; font-size:var(--fs-lg); font-weight:var(--fw-bold); margin:0;">${event.title}</h3>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap: var(--space-sm); margin-bottom: var(--space-md);">
+        <div style="font-size: var(--fs-xs); font-weight: var(--fw-bold); color: var(--color-primary); text-transform: uppercase;">${event.category}</div>
+        <p style="font-size: var(--fs-sm); color: var(--text-secondary); line-height:1.7;">${event.description}</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md); border-top:1px solid var(--border-color); border-bottom:1px solid var(--border-color); padding: var(--space-md) 0; margin-bottom: var(--space-md);">
+        <div>
+          <div style="font-size:10px; text-transform:uppercase; color:var(--text-muted); font-weight:bold;">Date & Time</div>
+          <div style="font-size:var(--fs-sm); font-weight:600; color:var(--text-primary); margin-top:2px;">
+            <i class="fas fa-calendar" style="color:var(--color-primary); margin-right:6px;"></i> ${this.formatDate(event.date)}
+          </div>
+          <div style="font-size:var(--fs-xs); color:var(--text-secondary); margin-top:1px; margin-left:20px;">
+            <i class="fas fa-clock" style="margin-right:4px;"></i> ${event.time}
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px; text-transform:uppercase; color:var(--text-muted); font-weight:bold;">Location</div>
+          <div style="font-size:var(--fs-sm); font-weight:600; color:var(--text-primary); margin-top:2px;">
+            <i class="fas fa-map-marker-alt" style="color:var(--color-primary); margin-right:6px;"></i> ${event.location}
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: var(--space-lg);">
+        <div style="font-size:10px; text-transform:uppercase; color:var(--text-muted); font-weight:bold; margin-bottom:var(--space-sm);">Speakers</div>
+        <div style="display:flex; flex-direction:column; gap:var(--space-sm);">
+          ${event.speakers.map(s => `
+            <div style="display:flex; align-items:center; gap:var(--space-md);">
+              <img src="${s.avatar}" alt="${s.name}" class="avatar avatar-sm">
+              <div>
+                <div style="font-size:var(--fs-xs); font-weight:600; color:var(--text-primary);">${s.name}</div>
+                <div style="font-size:10px; color:var(--text-muted);">${s.role} at ${s.company}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-color); padding-top:var(--space-md);">
+        <div style="font-size:var(--fs-md); font-weight:var(--fw-extrabold); color:var(--text-primary);">
+          ${isFree ? '🎟 Free' : event.price}
+        </div>
+        <div style="display:flex; gap:var(--space-sm);">
+          <button class="btn btn-ghost" id="details-close-btn-footer">Close</button>
+          <button class="btn btn-primary ${isReg ? 'btn-outline' : ''}" id="details-reg-btn" onclick="Events.toggleDetailsReg(${event.id})">
+            ${isReg ? '✓ Registered' : 'Register Now'}
+          </button>
+        </div>
+      </div>
+    `;
+
+    modal.classList.add('open');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    if (typeof App !== 'undefined' && App.focusTrap) {
+      App.focusTrap(modal);
+    }
+
+    const closeHandler = () => {
+      modal.classList.remove('open');
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      document.getElementById(`event-${eventId}`)?.focus();
+    };
+
+    closeBtn.onclick = closeHandler;
+    document.getElementById('details-close-btn-footer').onclick = closeHandler;
+  },
+
+  toggleDetailsReg(eventId) {
+    this.register(eventId);
+    // Update reg button in details modal
+    const regBtn = document.getElementById('details-reg-btn');
+    if (regBtn) {
+      const isReg = this.registered.has(eventId);
+      regBtn.textContent = isReg ? '✓ Registered' : 'Register Now';
+      regBtn.className = `btn btn-primary ${isReg ? 'btn-outline' : ''}`;
+    }
+  },
+
+  initCreateEventForm() {
+    const openBtn = document.getElementById('open-create-event-btn');
+    const modal = document.getElementById('create-event-modal');
+    const closeBtn = document.getElementById('create-event-close');
+    const cancelBtn = document.getElementById('create-event-cancel');
+    const form = document.getElementById('create-event-form');
+
+    if (openBtn && modal) {
+      openBtn.addEventListener('click', () => {
+        modal.classList.add('open');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        if (typeof App !== 'undefined' && App.focusTrap) {
+          App.focusTrap(modal);
+        }
+      });
+    }
+
+    const closeHandler = () => {
+      modal.classList.remove('open');
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      openBtn?.focus();
+    };
+
+    if (closeBtn) closeBtn.onclick = closeHandler;
+    if (cancelBtn) cancelBtn.onclick = closeHandler;
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const title = document.getElementById('event-form-title').value.trim();
+        const category = document.getElementById('event-form-category').value;
+        const format = document.getElementById('event-form-type').value;
+        const date = document.getElementById('event-form-date').value;
+        const time = document.getElementById('event-form-time').value.trim();
+        const location = document.getElementById('event-form-location').value.trim();
+        const desc = document.getElementById('event-form-desc').value.trim();
+
+        if (!title || !date || !time || !location) {
+          if (typeof App !== 'undefined' && App.showToast) {
+            App.showToast('Please fill all required fields!', 'error');
+          }
+          return;
+        }
+
+        const newEvent = {
+          id: Date.now(),
+          title,
+          category,
+          type: format,
+          description: desc || 'No description provided.',
+          image: 'images/event1.jpg',
+          date,
+          time,
+          location,
+          price: 'Free',
+          attendees: 1,
+          speakers: [
+            {
+              name: App.currentUser?.name || 'You',
+              role: App.currentUser?.role || 'Organizer',
+              company: 'ConnectX',
+              avatar: App.currentUser?.avatar || 'images/user1.jpg'
+            }
+          ]
+        };
+
+        // Prepend and persist
+        this.eventsData.unshift(newEvent);
+        
+        const customEvents = JSON.parse(localStorage.getItem('sp-events-data') || '[]');
+        customEvents.unshift(newEvent);
+        localStorage.setItem('sp-events-data', JSON.stringify(customEvents));
+
+        if (typeof App !== 'undefined' && App.showToast) {
+          App.showToast('Event created successfully! 🎉', 'success');
+        }
+
+        this.renderEvents();
+        closeHandler();
+        form.reset();
+      });
+    }
   },
 
   typeLabel(type) {

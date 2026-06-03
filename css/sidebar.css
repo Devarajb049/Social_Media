@@ -141,7 +141,10 @@
   overflow-x: hidden;
 }
 
-.sidebar-nav::-webkit-scrollbar { width: 3px; }
+.sidebar-nav::-webkit-scrollbar {
+  width: 3px;
+}
+
 .sidebar-nav::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: var(--radius-full);
@@ -293,7 +296,9 @@
   transition: all var(--transition-base);
 }
 
-.sidebar-toggle:hover { box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35); }
+.sidebar-toggle:hover {
+  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35);
+}
 
 /* ── Collapsed State (Static Textless View) ── */
 .sidebar {

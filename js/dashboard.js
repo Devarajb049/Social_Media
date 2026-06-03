@@ -39,6 +39,11 @@ const Dashboard = {
     setEl('header-user-name',     user.name.split(' ')[0]);
     setSrc('sidebar-avatar',      user.avatar || 'images/user1.jpg');
     setSrc('header-avatar',       user.avatar || 'images/user1.jpg');
+
+    // Feed Widget Profile Summary
+    setEl('feed-user-name',       user.name);
+    setEl('feed-user-role',       user.role || 'Member');
+    setSrc('feed-sidebar-avatar', user.avatar || 'images/user1.jpg');
   },
 
   /**
@@ -186,6 +191,34 @@ const Dashboard = {
    * Header: search, dropdowns, notifications
    */
   initHeader() {
+    // Accessibility Panel Dropdown toggle
+    const accBtn = document.getElementById('accessibility-toggle-btn');
+    const accPanel = document.getElementById('accessibility-panel');
+    const accClose = document.getElementById('accessibility-panel-close');
+    
+    if (accBtn && accPanel) {
+      accBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Close other dropdowns
+        document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+        accPanel.classList.toggle('open');
+        const isOpen = accPanel.classList.contains('open');
+        accBtn.setAttribute('aria-expanded', String(isOpen));
+        if (isOpen) {
+          accPanel.querySelector('input')?.focus();
+        }
+      });
+    }
+
+    if (accClose && accPanel) {
+      accClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        accPanel.classList.remove('open');
+        accBtn?.setAttribute('aria-expanded', 'false');
+        accBtn?.focus();
+      });
+    }
+
     // Avatar dropdown toggle
     const avatarBtn = document.getElementById('header-avatar-btn');
     const dropdown  = document.getElementById('header-dropdown');
@@ -193,6 +226,10 @@ const Dashboard = {
     if (avatarBtn && dropdown) {
       avatarBtn.addEventListener('click', (e) => {
         e.stopPropagation();
+        // Close accessibility panel
+        accPanel?.classList.remove('open');
+        accBtn?.setAttribute('aria-expanded', 'false');
+        
         dropdown.classList.toggle('open');
         avatarBtn.setAttribute('aria-expanded', dropdown.classList.contains('open'));
       });
@@ -254,9 +291,27 @@ const Dashboard = {
             modal.querySelector('textarea')?.focus();
           }
         } else if (action === 'event') {
-          App.showToast('Initializing Event Creation Wizard... Coming soon!', 'success');
+          const modal = document.getElementById('create-event-modal');
+          if (modal) {
+            modal.classList.add('open');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            if (typeof App !== 'undefined' && App.focusTrap) {
+              App.focusTrap(modal);
+            }
+            modal.querySelector('input')?.focus();
+          }
         } else if (action === 'project') {
-          App.showToast('Initializing Project Showcase Upload!', 'info');
+          const modal = document.getElementById('add-project-modal');
+          if (modal) {
+            modal.classList.add('open');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            if (typeof App !== 'undefined' && App.focusTrap) {
+              App.focusTrap(modal);
+            }
+            modal.querySelector('input')?.focus();
+          }
         }
       });
     });
@@ -386,14 +441,50 @@ const Dashboard = {
    * Settings section
    */
   initSettings() {
-    // Account settings form
     const settingsForm = document.getElementById('settings-form');
-    if (settingsForm) {
-      settingsForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        App.showToast('Settings saved successfully!', 'success');
-      });
+    if (!settingsForm) return;
+
+    const nameInput = document.getElementById('settings-name');
+    const bioTextarea = document.getElementById('settings-bio');
+
+    // 1. Populate form fields on section load
+    const user = App.currentUser;
+    if (user) {
+      if (nameInput) nameInput.value = user.name || '';
+      if (bioTextarea) bioTextarea.value = user.bio || '';
     }
+
+    // 2. Handle form submission
+    settingsForm.onsubmit = (e) => {
+      e.preventDefault();
+
+      const newName = nameInput ? nameInput.value.trim() : '';
+      const newBio = bioTextarea ? bioTextarea.value.trim() : '';
+
+      if (!newName) {
+        App.showToast('Display name cannot be empty!', 'error');
+        return;
+      }
+
+      // Update current user state
+      if (App.currentUser) {
+        App.currentUser.name = newName;
+        App.currentUser.bio = newBio;
+        
+        // Persist to localStorage
+        localStorage.setItem('sp-user', JSON.stringify(App.currentUser));
+      }
+
+      // Update name across the UI (Sidebar, Header, Feed Profile Card, etc.)
+      this.populateUserInfo();
+      
+      // Also update the profile page rendering if initialized
+      if (typeof Profile !== 'undefined') {
+        Profile.renderProfile();
+      }
+
+      App.showToast('Settings saved successfully! 🚀', 'success');
+    };
   }
 };
 

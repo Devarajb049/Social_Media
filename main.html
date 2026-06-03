@@ -45,7 +45,8 @@
       <!-- Brand Header -->
       <div class="sidebar-brand-wrapper">
         <a href="index.html" class="sidebar-brand" aria-label="ConnectX home">
-          <svg class="sidebar-logo connectx-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; flex-shrink: 0; box-shadow: none;">
+          <svg class="sidebar-logo connectx-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"
+            style="width: 36px; height: 36px; flex-shrink: 0; box-shadow: none;">
             <defs>
               <linearGradient id="logoGradSidebar" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#2563EB" />
@@ -53,13 +54,16 @@
                 <stop offset="100%" stop-color="#06B6D4" />
               </linearGradient>
             </defs>
-            <line x1="25" y1="50" x2="75" y2="50" stroke="url(#logoGradSidebar)" stroke-width="8" stroke-dasharray="2 2" stroke-linecap="round" />
-            <path d="M25 50 L50 25 L75 50 L50 75 Z" fill="none" stroke="url(#logoGradSidebar)" stroke-width="6" stroke-linejoin="round" />
+            <line x1="25" y1="50" x2="75" y2="50" stroke="url(#logoGradSidebar)" stroke-width="8" stroke-dasharray="2 2"
+              stroke-linecap="round" />
+            <path d="M25 50 L50 25 L75 50 L50 75 Z" fill="none" stroke="url(#logoGradSidebar)" stroke-width="6"
+              stroke-linejoin="round" />
             <circle cx="25" cy="50" r="10" fill="url(#logoGradSidebar)" />
             <circle cx="75" cy="50" r="10" fill="url(#logoGradSidebar)" />
             <circle cx="50" cy="25" r="7" fill="#7C3AED" />
             <circle cx="50" cy="75" r="7" fill="#06B6D4" />
-            <text x="50" y="56" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="18" fill="#fff" text-anchor="middle">X</text>
+            <text x="50" y="56" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="18" fill="#fff"
+              text-anchor="middle">X</text>
           </svg>
           <div class="sidebar-brand-text">
             <span class="sidebar-brand-name">ConnectX</span>
@@ -145,17 +149,70 @@
           <input type="search" id="header-search" placeholder="Search people, posts, events..."
             aria-label="Search ConnectX" autocomplete="off">
         </div>
-
         <!-- Header Actions -->
         <div class="header-actions" role="group" aria-label="Header actions">
 
+          <!-- Accessibility Control Toggle -->
+          <div class="relative" style="display: inline-block;" data-dropdown>
+            <button class="header-action-btn" id="accessibility-toggle-btn" aria-haspopup="true" aria-expanded="false"
+              aria-label="Accessibility Settings" title="Accessibility Settings">
+              <i class="fas fa-universal-access" aria-hidden="true"></i>
+            </button>
+            <!-- Accessibility Control Panel Dropdown -->
+            <div class="accessibility-panel" id="accessibility-panel" role="menu"
+              aria-label="Accessibility settings panel">
+              <div class="accessibility-panel-header">
+                <span>Accessibility Suite</span>
+                <i class="fas fa-times accessibility-panel-close" id="accessibility-panel-close"
+                  aria-label="Close accessibility panel" role="button"></i>
+              </div>
+
+              <div class="accessibility-option" role="menuitem">
+                <div class="accessibility-opt-info">
+                  <span class="accessibility-opt-title">High Contrast Mode</span>
+                  <span class="accessibility-opt-desc">Pure black background & yellow highlights</span>
+                </div>
+                <label class="acc-switch" aria-label="Toggle High Contrast Mode">
+                  <input type="checkbox" id="acc-contrast-toggle">
+                  <span class="acc-slider"></span>
+                </label>
+              </div>
+
+              <div class="accessibility-option" role="menuitem">
+                <div class="accessibility-opt-info">
+                  <span class="accessibility-opt-title">Large Text Mode</span>
+                  <span class="accessibility-opt-desc">Scales system fonts up for readability</span>
+                </div>
+                <label class="acc-switch" aria-label="Toggle Large Text Mode">
+                  <input type="checkbox" id="acc-text-toggle">
+                  <span class="acc-slider"></span>
+                </label>
+              </div>
+
+              <div class="accessibility-option" role="menuitem">
+                <div class="accessibility-opt-info">
+                  <span class="accessibility-opt-title">TTS Screen Reader</span>
+                  <span class="accessibility-opt-desc">Announce focused options verbally</span>
+                </div>
+                <label class="acc-switch" aria-label="Toggle TTS Screen Reader">
+                  <input type="checkbox" id="acc-tts-toggle">
+                  <span class="acc-slider"></span>
+                </label>
+              </div>
+
+              <button class="acc-keyboard-btn" id="acc-keyboard-btn" type="button" aria-haspopup="true"
+                aria-label="Open keyboard shortcuts cheat sheet">
+                <i class="fas fa-keyboard"></i> Keyboard Shortcuts Guide
+              </button>
+            </div>
+          </div>
+
           <!-- Theme Toggle -->
-          <button class="header-action-btn" id="theme-toggle" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+          <button class="header-action-btn" id="theme-toggle" aria-label="Toggle Light and Dark Mode"
+            title="Toggle Theme">
             <i class="fas fa-moon theme-icon-moon"></i>
             <i class="fas fa-sun theme-icon-sun"></i>
-          </button>
-
-          <!-- Notifications -->
+          </button> <!-- Notifications -->
           <button class="header-action-btn" id="notif-bell" aria-label="View notifications, 3 unread"
             title="Notifications">
             <i class="fas fa-bell" aria-hidden="true"></i>
@@ -206,6 +263,53 @@
         <!-- ════════ SECTION: FEED ════════ -->
         <section class="content-section active" id="section-feed" aria-labelledby="feed-heading" role="region">
           <h2 id="feed-heading" class="sr-only">Home Feed</h2>
+
+          <!-- Stats Row -->
+          <div class="stats-row" role="region" aria-label="Quick Statistics">
+            <div class="stat-card" role="article" aria-label="1,482 Connections, 12% increase this week">
+              <div class="stat-card-icon" style="background: rgba(37, 99, 235, 0.1); color: var(--color-primary);">
+                <i class="fas fa-users" aria-hidden="true"></i>
+              </div>
+              <div class="stat-card-value">1,482</div>
+              <div class="stat-card-label">Connections</div>
+              <div class="stat-card-change up">
+                <i class="fas fa-arrow-trend-up" aria-hidden="true"></i> +12% this week
+              </div>
+            </div>
+
+            <div class="stat-card" role="article" aria-label="4 Registered Events">
+              <div class="stat-card-icon" style="background: rgba(124, 58, 237, 0.1); color: var(--color-secondary);">
+                <i class="fas fa-calendar-check" aria-hidden="true"></i>
+              </div>
+              <div class="stat-card-value">4</div>
+              <div class="stat-card-label">Registered Events</div>
+              <div class="stat-card-change up">
+                <i class="fas fa-circle" style="font-size: 6px; color: var(--follow); margin-right: 4px;" aria-hidden="true"></i> Next in 2 days
+              </div>
+            </div>
+
+            <div class="stat-card" role="article" aria-label="7 Shared Projects">
+              <div class="stat-card-icon" style="background: rgba(6, 182, 212, 0.1); color: var(--color-accent);">
+                <i class="fas fa-lightbulb" aria-hidden="true"></i>
+              </div>
+              <div class="stat-card-value">7</div>
+              <div class="stat-card-label">Shared Projects</div>
+              <div class="stat-card-change up">
+                <i class="fas fa-arrow-trend-up" aria-hidden="true"></i> +2 new tags
+              </div>
+            </div>
+
+            <div class="stat-card" role="article" aria-label="412 Profile Views, 5% decrease this week">
+              <div class="stat-card-icon" style="background: rgba(236, 72, 153, 0.1); color: var(--color-accent-pink);">
+                <i class="fas fa-eye" aria-hidden="true"></i>
+              </div>
+              <div class="stat-card-value">412</div>
+              <div class="stat-card-label">Profile Views</div>
+              <div class="stat-card-change down">
+                <i class="fas fa-arrow-trend-down" aria-hidden="true"></i> -5% this week
+              </div>
+            </div>
+          </div>
 
           <div class="feed-layout">
 
@@ -393,8 +497,7 @@
               <h2 id="events-heading">Events Hub</h2>
               <p>Discover the best tech, design, and business events worldwide</p>
             </div>
-            <button class="btn btn-primary" onclick="App.showToast('Event creation coming soon!','info')"
-              aria-label="Create a new event">
+            <button class="btn btn-primary" id="open-create-event-btn" aria-label="Create a new event">
               <i class="fas fa-plus" aria-hidden="true"></i> Create Event
             </button>
           </div>
@@ -795,6 +898,244 @@
         <i class="fas fa-pencil-alt" aria-hidden="true"></i>
         <span>Post</span>
       </button>
+    </div>
+  </div>
+
+  <!-- Screen Reader TTS Announcer Container -->
+  <div class="tts-announcer" id="tts-announcer" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- ════════ KEYBOARD GUIDE MODAL ════════ -->
+  <div class="modal-overlay" id="keyboard-guide-modal" role="dialog" aria-modal="true" aria-labelledby="kbd-heading"
+    style="display:none;">
+    <div class="modal-box" style="max-width: 460px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="kbd-heading"
+          style="font-size: var(--fs-md); font-weight: var(--fw-bold); margin: 0;">Keyboard Shortcuts Guide</h2>
+        <button class="modal-close" id="kbd-close" aria-label="Close modal">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: var(--space-lg);">
+        <table style="width:100%; border-collapse: collapse; font-size: var(--fs-sm); color: var(--text-primary);">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+              <th style="padding-bottom: 8px;">Shortcut</th>
+              <th style="padding-bottom: 8px;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 0;"><kbd
+                  style="background:var(--surface-input); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: bold;">Alt
+                  + A</kbd></td>
+              <td style="padding: 10px 0;">Open Accessibility Panel</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 0;"><kbd
+                  style="background:var(--surface-input); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: bold;">Alt
+                  + H</kbd></td>
+              <td style="padding: 10px 0;">Toggle High Contrast Theme</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 0;"><kbd
+                  style="background:var(--surface-input); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: bold;">Alt
+                  + T</kbd></td>
+              <td style="padding: 10px 0;">Toggle Text-to-Speech screen reader</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 0;"><kbd
+                  style="background:var(--surface-input); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: bold;">Alt
+                  + K</kbd></td>
+              <td style="padding: 10px 0;">Open this Shortcuts Guide</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 0;"><kbd
+                  style="background:var(--surface-input); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: bold;">Tab</kbd>
+                / <kbd
+                  style="background:var(--surface-input); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: bold;">Shift
+                  + Tab</kbd></td>
+              <td style="padding: 10px 0;">Navigate focus forward / backward</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 0;"><kbd
+                  style="background:var(--surface-input); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: bold;">Enter</kbd>
+                / <kbd
+                  style="background:var(--surface-input); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: bold;">Space</kbd>
+              </td>
+              <td style="padding: 10px 0;">Activate focused element</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0;"><kbd
+                  style="background:var(--surface-input); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: bold;">Escape</kbd>
+              </td>
+              <td style="padding: 10px 0;">Close any open modal or dropdown</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ EVENT DETAILS MODAL ════════ -->
+  <div class="modal-overlay" id="event-details-modal" role="dialog" aria-modal="true"
+    aria-labelledby="event-details-title" style="display:none;">
+    <div class="modal-box" style="max-width: 600px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="event-details-title"
+          style="font-size: var(--fs-md); font-weight: var(--fw-bold); margin:0;">Event Details</h2>
+        <button class="modal-close" id="event-details-close" aria-label="Close modal">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="event-details-body" style="padding: var(--space-lg);">
+        <!-- Filled dynamically by events.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ CREATE EVENT MODAL ════════ -->
+  <div class="modal-overlay" id="create-event-modal" role="dialog" aria-modal="true"
+    aria-labelledby="create-event-title" style="display:none;">
+    <div class="modal-box" style="max-width: 520px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="create-event-title"
+          style="font-size: var(--fs-md); font-weight: var(--fw-bold); margin:0;">Create Event</h2>
+        <button class="modal-close" id="create-event-close" aria-label="Close modal">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: var(--space-lg);">
+        <form id="create-event-form" novalidate aria-label="Create Event Form">
+          <div class="form-group" style="margin-bottom: var(--space-md);">
+            <label for="event-form-title"
+              style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Event
+              Title</label>
+            <input type="text" id="event-form-title"
+              style="width:100%; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary);"
+              placeholder="e.g. UX Design Masterclass" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-md); display:flex; gap:var(--space-md);">
+            <div style="flex:1;">
+              <label for="event-form-category"
+                style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Category</label>
+              <select id="event-form-category"
+                style="width:100%; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary); cursor:pointer;">
+                <option value="Technology">Technology</option>
+                <option value="Design">Design</option>
+                <option value="AI/ML">AI/ML</option>
+                <option value="Networking">Networking</option>
+              </select>
+            </div>
+            <div style="flex:1;">
+              <label for="event-form-type"
+                style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Format</label>
+              <select id="event-form-type"
+                style="width:100%; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary); cursor:pointer;">
+                <option value="online">Online</option>
+                <option value="in-person">In-Person</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-md); display:flex; gap:var(--space-md);">
+            <div style="flex:1;">
+              <label for="event-form-date"
+                style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Date</label>
+              <input type="date" id="event-form-date"
+                style="width:100%; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary);"
+                required>
+            </div>
+            <div style="flex:1;">
+              <label for="event-form-time"
+                style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Time</label>
+              <input type="text" id="event-form-time"
+                style="width:100%; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary);"
+                placeholder="e.g. 2:00 PM – 4:00 PM" required>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-md);">
+            <label for="event-form-location"
+              style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Location
+              / Broadcast Link</label>
+            <input type="text" id="event-form-location"
+              style="width:100%; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary);"
+              placeholder="e.g. Zoom Link or HQ Auditorium" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-lg);">
+            <label for="event-form-desc"
+              style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Description</label>
+            <textarea id="event-form-desc"
+              style="width:100%; min-height:80px; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary); resize:vertical;"
+              placeholder="Describe what attendees will learn..."></textarea>
+          </div>
+
+          <div style="display:flex; gap:var(--space-sm); justify-content:flex-end;">
+            <button type="button" class="btn btn-ghost" id="create-event-cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create Event</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ ADD PROJECT MODAL ════════ -->
+  <div class="modal-overlay" id="add-project-modal" role="dialog" aria-modal="true" aria-labelledby="add-project-title"
+    style="display:none;">
+    <div class="modal-box" style="max-width: 520px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="add-project-title"
+          style="font-size: var(--fs-md); font-weight: var(--fw-bold); margin:0;">Add Project to Showcase</h2>
+        <button class="modal-close" id="add-project-close" aria-label="Close modal">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: var(--space-lg);">
+        <form id="add-project-form" novalidate aria-label="Add Project Form">
+          <div class="form-group" style="margin-bottom: var(--space-md);">
+            <label for="proj-form-title"
+              style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Project
+              Title</label>
+            <input type="text" id="proj-form-title"
+              style="width:100%; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary);"
+              placeholder="e.g. Ast Parser Refactorer" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-md);">
+            <label for="proj-form-tags"
+              style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Skills
+              / Tags (comma separated)</label>
+            <input type="text" id="proj-form-tags"
+              style="width:100%; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary);"
+              placeholder="e.g. Vanilla JS, CSS Grid, Design" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-md);">
+            <label for="proj-form-demo"
+              style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Live
+              Demo Link</label>
+            <input type="url" id="proj-form-demo"
+              style="width:100%; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary);"
+              placeholder="e.g. https://github.com/username/project">
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-lg);">
+            <label for="proj-form-desc"
+              style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:6px;">Description</label>
+            <textarea id="proj-form-desc"
+              style="width:100%; min-height:80px; border-radius:var(--radius-md); border:1.5px solid var(--border-color); padding:10px 14px; background:var(--surface-input); color:var(--text-primary); resize:vertical;"
+              placeholder="Describe what your project does..."></textarea>
+          </div>
+
+          <div style="display:flex; gap:var(--space-sm); justify-content:flex-end;">
+            <button type="button" class="btn btn-ghost" id="add-project-cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add Project</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 

@@ -7,15 +7,59 @@
 const Profile = {
   initialized: false,
   activeTab: 'posts',
+  activeFilter: 'all',
+
+  projectsData: [
+    {
+      title: 'ConnectX Social Platform',
+      desc: 'A full-featured social networking platform with real-time chat, events, and talent showcase.',
+      img: 'images/post1.jpg',
+      tags: ['React', 'Node.js', 'MongoDB', 'CSS Grid']
+    },
+    {
+      title: 'Interactive Particle Engine',
+      desc: 'A super-smooth, pure CSS and JavaScript physics particle burst system optimized for reactions.',
+      img: 'images/post2.jpg',
+      tags: ['Vanilla JS', 'CSS3 Transitions', 'UI Micro-Animations']
+    },
+    {
+      title: 'Figma Auto-Layout Master',
+      desc: 'A complete collection of dynamic UI design layouts fully responsive across mobile, desktop, and tablets.',
+      img: 'images/post3.jpg',
+      tags: ['Figma prototyping', 'Responsive layout', 'Design Systems']
+    },
+    {
+      title: 'Spaghetti Script Refactorer',
+      desc: 'A CLI tool that automatically extracts inline script tags, cleans up duplicated functions, and optimizes layout paint times.',
+      img: 'images/post1.jpg',
+      tags: ['Node.js', 'Parser AST', 'Automation']
+    }
+  ],
 
   init() {
     if (this.initialized) return;
     this.initialized = true;
+
+    // Load custom projects from localStorage
+    const stored = localStorage.getItem('sp-showcase-projects');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        parsed.forEach(pp => {
+          if (!this.projectsData.find(p => p.title === pp.title)) {
+            this.projectsData.unshift(pp);
+          }
+        });
+      } catch(e) {}
+    }
+
     this.renderProfile();
     this.initTabs();
     this.renderPostGrid();
     this.renderShowcase();
     this.renderExperience();
+    this.initShowcaseFilters();
+    this.initAddProjectForm();
   },
 
   renderProfile() {
@@ -103,42 +147,42 @@ const Profile = {
     `).join('');
   },
 
-  renderShowcase() {
-    const grids = [
-      document.getElementById('showcase-grid'),
-      document.getElementById('profile-showcase-grid')
-    ].filter(Boolean);
+  matchesFilter(tags, filter) {
+    const f = filter.toLowerCase();
+    if (f === 'all') return true;
+    
+    return tags.some(tag => {
+      const t = tag.toLowerCase();
+      if (f === 'web dev') {
+        return ['react', 'node.js', 'mongodb', 'css grid', 'vanilla js', 'html/css', 'javascript', 'web dev', 'css3 transitions'].includes(t);
+      }
+      if (f === 'design') {
+        return ['figma prototyping', 'responsive layout', 'design systems', 'design', 'ui micro-animations', 'css grid'].includes(t);
+      }
+      if (f === 'ai/ml') {
+        return ['ai/ml', 'parser ast', 'automation', 'node.js'].includes(t);
+      }
+      if (f === 'mobile') {
+        return ['mobile', 'react native', 'android', 'ios'].includes(t);
+      }
+      if (f === 'open source') {
+        return ['open source', 'git versioning', 'automation'].includes(t);
+      }
+      return t === f || t.includes(f);
+    });
+  },
 
-    if (!grids.length) return;
+  showcaseGridHTML(projects) {
+    if (!projects.length) {
+      return `
+        <div class="empty-state" style="grid-column:1/-1;padding:var(--space-2xl) var(--space-lg);text-align:center;background:var(--surface-card);border:1px solid var(--border-color);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);">
+          <i class="fas fa-lightbulb" style="font-size:3rem;color:var(--text-muted);margin-bottom:var(--space-md);display:block;"></i>
+          <h3 style="font-size:var(--fs-md);font-weight:700;color:var(--text-primary);margin-bottom:6px;">No projects found</h3>
+          <p style="font-size:var(--fs-sm);color:var(--text-muted);max-width:320px;margin:0 auto;line-height:1.5;">Try a different filter tag or add your own project!</p>
+        </div>`;
+    }
 
-    const projects = [
-      {
-        title: 'ConnectX Social Platform',
-        desc: 'A full-featured social networking platform with real-time chat, events, and talent showcase.',
-        img: 'images/post1.jpg',
-        tags: ['React', 'Node.js', 'MongoDB', 'CSS Grid']
-      },
-      {
-        title: 'Interactive Particle Engine',
-        desc: 'A super-smooth, pure CSS and JavaScript physics particle burst system optimized for reactions.',
-        img: 'images/post2.jpg',
-        tags: ['Vanilla JS', 'CSS3 Transitions', 'UI Micro-Animations']
-      },
-      {
-        title: 'Figma Auto-Layout Master',
-        desc: 'A complete collection of dynamic UI design layouts fully responsive across mobile, desktop, and tablets.',
-        img: 'images/post3.jpg',
-        tags: ['Figma prototyping', 'Responsive layout', 'Design Systems']
-      },
-      {
-        title: 'Spaghetti Script Refactorer',
-        desc: 'A CLI tool that automatically extracts inline script tags, cleans up duplicated functions, and optimizes layout paint times.',
-        img: 'images/post1.jpg',
-        tags: ['Node.js', 'Parser AST', 'Automation']
-      },
-    ];
-
-    const html = projects.map(p => `
+    return projects.map(p => `
       <div class="showcase-card" role="article" aria-label="${p.title}">
         <img src="${p.img}" alt="${p.title}" class="showcase-card-img" loading="lazy">
         <div class="showcase-card-body">
@@ -155,10 +199,114 @@ const Profile = {
         </div>
       </div>
     `).join('');
+  },
 
-    grids.forEach(grid => {
-      grid.innerHTML = html;
+  renderShowcase() {
+    const mainGrid = document.getElementById('showcase-grid');
+    const profileGrid = document.getElementById('profile-showcase-grid');
+
+    if (mainGrid) {
+      const filtered = this.projectsData.filter(p => this.matchesFilter(p.tags, this.activeFilter));
+      mainGrid.innerHTML = this.showcaseGridHTML(filtered);
+    }
+    if (profileGrid) {
+      profileGrid.innerHTML = this.showcaseGridHTML(this.projectsData);
+    }
+  },
+
+  initShowcaseFilters() {
+    const filterChips = document.querySelectorAll('#section-showcase .filter-chip');
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => {
+          c.classList.remove('active');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        
+        chip.classList.add('active');
+        chip.setAttribute('aria-pressed', 'true');
+        
+        this.activeFilter = chip.textContent.trim();
+        this.renderShowcase();
+        
+        const announcer = document.getElementById('tts-announcer');
+        if (announcer) {
+          announcer.textContent = `Showcase filtered by ${this.activeFilter}`;
+        }
+      });
+
+      chip.setAttribute('tabindex', '0');
+      chip.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          chip.click();
+        }
+      });
     });
+  },
+
+  initAddProjectForm() {
+    const modal = document.getElementById('add-project-modal');
+    const closeBtn = document.getElementById('add-project-close');
+    const cancelBtn = document.getElementById('add-project-cancel');
+    const form = document.getElementById('add-project-form');
+
+    const closeHandler = () => {
+      if (modal) {
+        modal.classList.remove('open');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+      const triggerBtn = document.querySelector('[aria-label="Add your project to showcase"]') || document.getElementById('fab-create');
+      triggerBtn?.focus();
+    };
+
+    if (closeBtn) closeBtn.onclick = closeHandler;
+    if (cancelBtn) cancelBtn.onclick = closeHandler;
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const title = document.getElementById('proj-form-title').value.trim();
+        const tagsInput = document.getElementById('proj-form-tags').value.trim();
+        const demo = document.getElementById('proj-form-demo').value.trim();
+        const desc = document.getElementById('proj-form-desc').value.trim();
+
+        if (!title || !tagsInput) {
+          if (typeof App !== 'undefined' && App.showToast) {
+            App.showToast('Please fill all required fields!', 'error');
+          }
+          return;
+        }
+
+        const tags = tagsInput.split(',').map(t => t.trim()).filter(Boolean);
+        const defaultImages = ['images/post1.jpg', 'images/post2.jpg', 'images/post3.jpg'];
+        const img = defaultImages[this.projectsData.length % defaultImages.length];
+
+        const newProject = {
+          title,
+          desc: desc || 'No description provided.',
+          img,
+          tags,
+          demo: demo || '#'
+        };
+
+        this.projectsData.unshift(newProject);
+
+        const customProjects = JSON.parse(localStorage.getItem('sp-showcase-projects') || '[]');
+        customProjects.unshift(newProject);
+        localStorage.setItem('sp-showcase-projects', JSON.stringify(customProjects));
+
+        if (typeof App !== 'undefined' && App.showToast) {
+          App.showToast('Project added to showcase successfully! 🚀', 'success');
+        }
+
+        this.renderShowcase();
+        closeHandler();
+        form.reset();
+      });
+    }
   },
 
   renderExperience() {
